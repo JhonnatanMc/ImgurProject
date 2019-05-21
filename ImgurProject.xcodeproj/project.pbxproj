@@ -9,12 +9,16 @@
 /* Begin PBXBuildFile section */
 		1F5BE22905D786E77D560074 /* Pods_ImgurProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AA9B3E403B70CF725CE8017 /* Pods_ImgurProject.framework */; };
 		3D68B3662294981200216684 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B3652294981200216684 /* AppDelegate.swift */; };
-		3D68B3682294981200216684 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B3672294981200216684 /* ViewController.swift */; };
+		3D68B3682294981200216684 /* ImgurViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B3672294981200216684 /* ImgurViewController.swift */; };
 		3D68B36B2294981200216684 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D68B3692294981200216684 /* Main.storyboard */; };
 		3D68B36D2294981400216684 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D68B36C2294981400216684 /* Assets.xcassets */; };
 		3D68B3702294981400216684 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D68B36E2294981400216684 /* LaunchScreen.storyboard */; };
 		3D68B37B2294981400216684 /* ImgurProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B37A2294981400216684 /* ImgurProjectTests.swift */; };
 		3D68B3862294981400216684 /* ImgurProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B3852294981400216684 /* ImgurProjectUITests.swift */; };
+		3D68B3942294AA2700216684 /* ImgurCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B3932294AA2700216684 /* ImgurCollectionViewCell.swift */; };
+		3D68B3972294AAD500216684 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B3962294AAD500216684 /* Photo.swift */; };
+		3D68B3992294AC2E00216684 /* Photos.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D68B3982294AC2E00216684 /* Photos.xcassets */; };
+		3D68B39C2294AFAA00216684 /* Photos.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D68B39B2294AFAA00216684 /* Photos.plist */; };
 		7551FD9DC66FB3F190A91736 /* Pods_ImgurProjectTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9795E9342A7C93DFD99DB54E /* Pods_ImgurProjectTests.framework */; };
 		F4428DBC3BA6C706B229A2E7 /* Pods_ImgurProjectUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE7939E801CFD1E153C6B2F7 /* Pods_ImgurProjectUITests.framework */; };
 /* End PBXBuildFile section */
@@ -40,7 +44,7 @@
 		1782BA2E946123C95AAB610C /* Pods-ImgurProjectUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImgurProjectUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ImgurProjectUITests/Pods-ImgurProjectUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		3D68B3622294981200216684 /* ImgurProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImgurProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D68B3652294981200216684 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3D68B3672294981200216684 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		3D68B3672294981200216684 /* ImgurViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgurViewController.swift; sourceTree = "<group>"; };
 		3D68B36A2294981200216684 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3D68B36C2294981400216684 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3D68B36F2294981400216684 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,6 +55,10 @@
 		3D68B3812294981400216684 /* ImgurProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImgurProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D68B3852294981400216684 /* ImgurProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgurProjectUITests.swift; sourceTree = "<group>"; };
 		3D68B3872294981400216684 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D68B3932294AA2700216684 /* ImgurCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgurCollectionViewCell.swift; sourceTree = "<group>"; };
+		3D68B3962294AAD500216684 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		3D68B3982294AC2E00216684 /* Photos.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Photos.xcassets; sourceTree = "<group>"; };
+		3D68B39B2294AFAA00216684 /* Photos.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Photos.plist; sourceTree = "<group>"; };
 		53891E1DECC9214B4BEA3614 /* Pods-ImgurProjectTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImgurProjectTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ImgurProjectTests/Pods-ImgurProjectTests.release.xcconfig"; sourceTree = "<group>"; };
 		6AA9B3E403B70CF725CE8017 /* Pods_ImgurProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ImgurProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D204839948328E601B2411F /* Pods-ImgurProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImgurProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ImgurProject/Pods-ImgurProject.debug.xcconfig"; sourceTree = "<group>"; };
@@ -114,12 +122,15 @@
 		3D68B3642294981200216684 /* ImgurProject */ = {
 			isa = PBXGroup;
 			children = (
+				3D68B39A2294AF8900216684 /* Assets */,
+				3D68B3952294AAC600216684 /* Model */,
 				3D68B3652294981200216684 /* AppDelegate.swift */,
-				3D68B3672294981200216684 /* ViewController.swift */,
+				3D68B3672294981200216684 /* ImgurViewController.swift */,
 				3D68B3692294981200216684 /* Main.storyboard */,
 				3D68B36C2294981400216684 /* Assets.xcassets */,
 				3D68B36E2294981400216684 /* LaunchScreen.storyboard */,
 				3D68B3712294981400216684 /* Info.plist */,
+				3D68B3932294AA2700216684 /* ImgurCollectionViewCell.swift */,
 			);
 			path = ImgurProject;
 			sourceTree = "<group>";
@@ -140,6 +151,23 @@
 				3D68B3872294981400216684 /* Info.plist */,
 			);
 			path = ImgurProjectUITests;
+			sourceTree = "<group>";
+		};
+		3D68B3952294AAC600216684 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3D68B3962294AAD500216684 /* Photo.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3D68B39A2294AF8900216684 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				3D68B39B2294AFAA00216684 /* Photos.plist */,
+				3D68B3982294AC2E00216684 /* Photos.xcassets */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 		4318CC800E93625FE611E1A0 /* Pods */ = {
@@ -278,9 +306,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D68B3992294AC2E00216684 /* Photos.xcassets in Resources */,
 				3D68B3702294981400216684 /* LaunchScreen.storyboard in Resources */,
 				3D68B36D2294981400216684 /* Assets.xcassets in Resources */,
 				3D68B36B2294981200216684 /* Main.storyboard in Resources */,
+				3D68B39C2294AFAA00216684 /* Photos.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,7 +521,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3D68B3682294981200216684 /* ViewController.swift in Sources */,
+				3D68B3972294AAD500216684 /* Photo.swift in Sources */,
+				3D68B3682294981200216684 /* ImgurViewController.swift in Sources */,
+				3D68B3942294AA2700216684 /* ImgurCollectionViewCell.swift in Sources */,
 				3D68B3662294981200216684 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
