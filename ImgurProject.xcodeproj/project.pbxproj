@@ -26,6 +26,7 @@
 		3D68B3A52295C85B00216684 /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B3A42295C85B00216684 /* ImageDetailViewController.swift */; };
 		3D68B3A82295CC0100216684 /* WebServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B3A72295CC0100216684 /* WebServiceManager.swift */; };
 		3D68B3AA2295DDAD00216684 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B3A92295DDAD00216684 /* SearchService.swift */; };
+		3D68B3AC2295E92000216684 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B3AB2295E92000216684 /* Image.swift */; };
 		7551FD9DC66FB3F190A91736 /* Pods_ImgurProjectTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9795E9342A7C93DFD99DB54E /* Pods_ImgurProjectTests.framework */; };
 		F4428DBC3BA6C706B229A2E7 /* Pods_ImgurProjectUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE7939E801CFD1E153C6B2F7 /* Pods_ImgurProjectUITests.framework */; };
 /* End PBXBuildFile section */
@@ -73,6 +74,7 @@
 		3D68B3A42295C85B00216684 /* ImageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
 		3D68B3A72295CC0100216684 /* WebServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServiceManager.swift; sourceTree = "<group>"; };
 		3D68B3A92295DDAD00216684 /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
+		3D68B3AB2295E92000216684 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		53891E1DECC9214B4BEA3614 /* Pods-ImgurProjectTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImgurProjectTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ImgurProjectTests/Pods-ImgurProjectTests.release.xcconfig"; sourceTree = "<group>"; };
 		6AA9B3E403B70CF725CE8017 /* Pods_ImgurProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ImgurProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D204839948328E601B2411F /* Pods-ImgurProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImgurProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ImgurProject/Pods-ImgurProject.debug.xcconfig"; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 		3D68B3952294AAC600216684 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3D68B3AB2295E92000216684 /* Image.swift */,
 				3D68B3962294AAD500216684 /* Photo.swift */,
 				3D68B39D2295AE4D00216684 /* Result.swift */,
 				3D68B39F2295AEA600216684 /* Imgur.swift */,
@@ -514,12 +517,14 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-ImgurProject/Pods-ImgurProject-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -575,6 +580,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D68B39E2295AE4D00216684 /* Result.swift in Sources */,
+				3D68B3AC2295E92000216684 /* Image.swift in Sources */,
 				3D68B3972294AAD500216684 /* Photo.swift in Sources */,
 				3D68B3A02295AEA600216684 /* Imgur.swift in Sources */,
 				3D68B3AA2295DDAD00216684 /* SearchService.swift in Sources */,

@@ -1,22 +1,22 @@
 //
-//  Imgur.swift
+//  Image.swift
 //  ImgurProject
 //
 //  Created by Jhonnatan Macias De La Puente on 5/22/19.
 //  Copyright © 2019 Jhonnatan Macias. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-struct Imgur {
+struct Image {
 
-    var images: [Image]?
-    var link: String?
+    var link: String
+    var imageDescription: String?
     var title: String?
 
     init() {
-        images = [Image]()
         link = ""
+        imageDescription = ""
         title = ""
     }
 
@@ -24,23 +24,28 @@ struct Imgur {
         self.init()
 
         do {
-            let container = try decoder.container(keyedBy: ResultKeys.self)
-            images = try container.decodeIfPresent([Image].self, forKey: .images)
-            link = try container.decodeIfPresent(String.self, forKey: .link)
+            let container = try decoder.container(keyedBy:  ResultKeys.self)
+            link =  try container.decode(String.self, forKey: .link)
+            imageDescription = try container.decodeIfPresent(String.self, forKey: .imageDescription)
             title = try container.decodeIfPresent(String.self, forKey: .title)
+
         } catch let error {
-            print("error parse Imgur result \(error)")
+            print("error parse Image result \(error)")
         }
     }
 
 }
 
-extension Imgur: Decodable {
+extension Image: Decodable {
 
     enum ResultKeys: String, CodingKey {
-        case images = "images"
         case link = "link"
+        case imageDescription = "description"
         case title = "title"
     }
 
 }
+
+
+
+
