@@ -7,7 +7,8 @@ target 'ImgurProject' do
 
   # Pods for ImgurProject
     pod 'Alamofire', '4.8.0'
- 
+    pod 'AlamofireImage', '3.5.2'
+
   target 'ImgurProjectTests' do
     inherit! :search_paths
     # Pods for testing

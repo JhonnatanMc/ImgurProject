@@ -17,7 +17,6 @@ struct Photo {
         self.image = image
     }
 
-
     init?(dictionary: [String: String]) {
         guard let caption = dictionary["Caption"], let photo = dictionary["Photo"],
             let image = UIImage(named: photo) else {
