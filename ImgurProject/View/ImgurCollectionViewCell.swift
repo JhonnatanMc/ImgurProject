@@ -19,8 +19,12 @@ class ImgurCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        pictureImageView.image = nil
+    }
+
     func configureCell(imgur: Imgur) {
-        print(imgur)
         guard let image = imgur.images?.first else {
             return
         }

@@ -28,6 +28,7 @@ class ImgurViewController: UIViewController {
         collectionView.contentInset = UIEdgeInsets(top: 23, left: 16, bottom: 10, right: 16)
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.prefetchDataSource = self
 
         if let layout = collectionView?.collectionViewLayout as? ImageLayout {
             layout.delegate = self
@@ -87,6 +88,36 @@ extension ImgurViewController: UICollectionViewDelegate {
         self.navigationController?.pushViewController(albumView, animated: true)
     }
 }
+
+// MARK: - UICollectionViewDataSourcePrefetching
+
+extension ImgurViewController: UICollectionViewDataSourcePrefetching {
+
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        print("prefetch \(indexPaths)")
+        for indexPath in indexPaths {
+            if  indexPath.item > (photos.count  - 5) {
+                WebServiceManager.sharedService.requestAPI(textSearch: "cats", page: "2") {  (JSON: Data?, status: Int) in
+                    do {
+                        if status == 200 {
+                            let myStructDictionary = try JSONDecoder().decode(Result.self, from: JSON!)
+                            self.photos.append(contentsOf : myStructDictionary.data)
+                            self.collectionView.reloadData()
+                            self.collectionView.collectionViewLayout.invalidateLayout()
+                        }
+                    } catch {
+                        //                callback(Array<Artist>(), true, "Unable to reach server. Please check Internet connectivity and try again later.", status)
+                    }
+            }
+        }
+    }
+    }
+
+
+
+}
+
+// MARK: - ImageLayoutDelegate
 
 extension ImgurViewController: ImageLayoutDelegate {
 
