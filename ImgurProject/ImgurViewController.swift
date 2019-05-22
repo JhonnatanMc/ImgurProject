@@ -13,7 +13,7 @@ class ImgurViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
     var photos = Photo.allPhotos()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,7 +24,13 @@ class ImgurViewController: UIViewController {
         collectionView.backgroundColor = .clear
         collectionView.contentInset = UIEdgeInsets(top: 23, left: 16, bottom: 10, right: 16)
         collectionView.dataSource = self
-        collectionView.delegate = self
+//        collectionView.delegate = self
+        
+        if let layout = collectionView?.collectionViewLayout as? ImageLayout {
+            layout.delegate = self
+        }
+
+        
     }
 
 }
@@ -43,10 +49,18 @@ extension ImgurViewController: UICollectionViewDataSource {
 
 }
 
-extension ImgurViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemSize = (collectionView.frame.width - (collectionView.contentInset.left + collectionView.contentInset.right + 10)) / 2
-        return CGSize(width: itemSize, height: itemSize)
+//extension ImgurViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        let itemSize = (collectionView.frame.width - (collectionView.contentInset.left + collectionView.contentInset.right + 10)) / 2
+//        return CGSize(width: itemSize, height: itemSize)
+//    }
+//}
+
+extension ImgurViewController: ImageLayoutDelegate {
+    func collectionView(_ collectionView: UICollectionView,
+                        heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
+        
+        return photos[indexPath.item].image.size.height
     }
 }
 
