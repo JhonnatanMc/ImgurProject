@@ -13,11 +13,13 @@ struct Image {
     var link: String
     var imageDescription: String?
     var title: String?
+    var height: Int?
 
     init() {
         link = ""
         imageDescription = ""
         title = ""
+        height = 0
     }
 
     init(from decoder: Decoder) {
@@ -28,6 +30,10 @@ struct Image {
             link =  try container.decode(String.self, forKey: .link)
             imageDescription = try container.decodeIfPresent(String.self, forKey: .imageDescription)
             title = try container.decodeIfPresent(String.self, forKey: .title)
+
+            if let heightImage = try container.decodeIfPresent(Int.self, forKey: .height) {
+                height = heightImage > 450 ? 450 : heightImage
+            }
 
         } catch let error {
             print("error parse Image result \(error)")
@@ -42,6 +48,7 @@ extension Image: Decodable {
         case link = "link"
         case imageDescription = "description"
         case title = "title"
+        case height = "height"
     }
 
 }

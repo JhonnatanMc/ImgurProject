@@ -11,12 +11,10 @@ import UIKit
 struct Imgur {
 
     var images: [Image]?
-    var link: String?
     var title: String?
 
     init() {
         images = [Image]()
-        link = ""
         title = ""
     }
 
@@ -25,9 +23,10 @@ struct Imgur {
 
         do {
             let container = try decoder.container(keyedBy: ResultKeys.self)
-            images = try container.decodeIfPresent([Image].self, forKey: .images)
-            link = try container.decodeIfPresent(String.self, forKey: .link)
             title = try container.decodeIfPresent(String.self, forKey: .title)
+            if let imagesArr = try container.decodeIfPresent([Image].self, forKey: .images) {
+                images = imagesArr.filter { $0.link.contains(".jpg") }
+            }
         } catch let error {
             print("error parse Imgur result \(error)")
         }
@@ -39,7 +38,6 @@ extension Imgur: Decodable {
 
     enum ResultKeys: String, CodingKey {
         case images = "images"
-        case link = "link"
         case title = "title"
     }
 

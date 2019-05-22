@@ -18,9 +18,6 @@
 		3D68B37B2294981400216684 /* ImgurProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B37A2294981400216684 /* ImgurProjectTests.swift */; };
 		3D68B3862294981400216684 /* ImgurProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B3852294981400216684 /* ImgurProjectUITests.swift */; };
 		3D68B3942294AA2700216684 /* ImgurCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B3932294AA2700216684 /* ImgurCollectionViewCell.swift */; };
-		3D68B3972294AAD500216684 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B3962294AAD500216684 /* Photo.swift */; };
-		3D68B3992294AC2E00216684 /* Photos.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D68B3982294AC2E00216684 /* Photos.xcassets */; };
-		3D68B39C2294AFAA00216684 /* Photos.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D68B39B2294AFAA00216684 /* Photos.plist */; };
 		3D68B39E2295AE4D00216684 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B39D2295AE4D00216684 /* Result.swift */; };
 		3D68B3A02295AEA600216684 /* Imgur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B39F2295AEA600216684 /* Imgur.swift */; };
 		3D68B3A52295C85B00216684 /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B3A42295C85B00216684 /* ImageDetailViewController.swift */; };
@@ -66,9 +63,6 @@
 		3D68B3852294981400216684 /* ImgurProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgurProjectUITests.swift; sourceTree = "<group>"; };
 		3D68B3872294981400216684 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D68B3932294AA2700216684 /* ImgurCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgurCollectionViewCell.swift; sourceTree = "<group>"; };
-		3D68B3962294AAD500216684 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
-		3D68B3982294AC2E00216684 /* Photos.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Photos.xcassets; sourceTree = "<group>"; };
-		3D68B39B2294AFAA00216684 /* Photos.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Photos.plist; sourceTree = "<group>"; };
 		3D68B39D2295AE4D00216684 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		3D68B39F2295AEA600216684 /* Imgur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Imgur.swift; sourceTree = "<group>"; };
 		3D68B3A42295C85B00216684 /* ImageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
@@ -159,7 +153,6 @@
 				3D68B3A62295CBEF00216684 /* webServices */,
 				20F05A2D2295020D0056CDA4 /* Protocols */,
 				20F05A2A2294FC250056CDA4 /* View */,
-				3D68B39A2294AF8900216684 /* Assets */,
 				3D68B3952294AAC600216684 /* Model */,
 				3D68B3652294981200216684 /* AppDelegate.swift */,
 				3D68B3692294981200216684 /* Main.storyboard */,
@@ -192,20 +185,10 @@
 			isa = PBXGroup;
 			children = (
 				3D68B3AB2295E92000216684 /* Image.swift */,
-				3D68B3962294AAD500216684 /* Photo.swift */,
 				3D68B39D2295AE4D00216684 /* Result.swift */,
 				3D68B39F2295AEA600216684 /* Imgur.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		3D68B39A2294AF8900216684 /* Assets */ = {
-			isa = PBXGroup;
-			children = (
-				3D68B39B2294AFAA00216684 /* Photos.plist */,
-				3D68B3982294AC2E00216684 /* Photos.xcassets */,
-			);
-			path = Assets;
 			sourceTree = "<group>";
 		};
 		3D68B3A32295C83700216684 /* ViewController */ = {
@@ -362,11 +345,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3D68B3992294AC2E00216684 /* Photos.xcassets in Resources */,
 				3D68B3702294981400216684 /* LaunchScreen.storyboard in Resources */,
 				3D68B36D2294981400216684 /* Assets.xcassets in Resources */,
 				3D68B36B2294981200216684 /* Main.storyboard in Resources */,
-				3D68B39C2294AFAA00216684 /* Photos.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -581,7 +562,6 @@
 			files = (
 				3D68B39E2295AE4D00216684 /* Result.swift in Sources */,
 				3D68B3AC2295E92000216684 /* Image.swift in Sources */,
-				3D68B3972294AAD500216684 /* Photo.swift in Sources */,
 				3D68B3A02295AEA600216684 /* Imgur.swift in Sources */,
 				3D68B3AA2295DDAD00216684 /* SearchService.swift in Sources */,
 				3D68B3682294981200216684 /* ImgurViewController.swift in Sources */,

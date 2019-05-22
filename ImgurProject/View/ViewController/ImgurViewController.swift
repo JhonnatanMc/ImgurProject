@@ -18,7 +18,7 @@ class ImgurViewController: UIViewController {
     // MARK: - Properties
 
     internal var searchTitleImage: String = ""
-    var photos = [Photo]()
+    var photos = [Imgur]()
     
     // MARK: - Life cycle
 
@@ -72,7 +72,7 @@ extension ImgurViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImgurCollectionViewCell", for: indexPath as IndexPath) as! ImgurCollectionViewCell
-        cell.photo = photos[indexPath.item]
+        cell.configureCell(imgur: photos[indexPath.row])
         return cell
     }
 
@@ -92,7 +92,12 @@ extension ImgurViewController: ImageLayoutDelegate {
 
     func collectionView(_ collectionView: UICollectionView,
                         heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
-        return photos[indexPath.item].image.size.height
+
+        guard let imageHeight = photos[indexPath.item].images?.first?.height else {
+            return 300
+        }
+
+        return CGFloat(imageHeight)
     }
 
 }
@@ -145,31 +150,21 @@ extension ImgurViewController: UISearchBarDelegate {
         guard !searchTitleImage.isEmpty else {
             return
         }
+
         let photoName = searchTitleImage.replacingOccurrences(of: " ", with: "%20")
-        photos = Photo.allPhotos().filter({$0.caption.contains(photoName)})
         WebServiceManager.sharedService.requestAPI(textSearch: photoName, page: "1") {  (JSON: Data?, status: Int) in
             do {
                 if status == 200 {
                     let myStructDictionary = try JSONDecoder().decode(Result.self, from: JSON!)
-
-                    print(myStructDictionary)
+                    self.photos = myStructDictionary.data
+                    self.collectionView.reloadData()
+                    self.collectionView.collectionViewLayout.invalidateLayout()
                 }
             } catch {
     //                callback(Array<Artist>(), true, "Unable to reach server. Please check Internet connectivity and try again later.", status)
             }
         }
-        collectionView.reloadData()
-        collectionView.collectionViewLayout.invalidateLayout()
-        //            ArtistController.getArtist(artistName: artistName) { (artists, error, errorMessage, status) in
-        //                if !error {
-        //                    self.artistFilteredArray = artists
-        //                    self.artistCollectionView.reloadData()
-        //                } else {
-        //                    self.showAlert(errorMessage)
-        //                }
-        //            }
 
-        //        self.removeSpinner()
     }
 
 }

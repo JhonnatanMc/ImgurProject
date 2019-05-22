@@ -17,31 +17,31 @@ class ImgurCollectionViewCell: UICollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+    }
 
-        let url = URL(string: "https://i.imgur.com/p8oFfsA.jpg")!
-//   https://www.w3schools.com/w3css/img_lights.jpg https://i.imgur.com/p8oFfsA.jpg
-        let placeholderImage = UIImage(named: "pattern")!
+    func configureCell(imgur: Imgur) {
+        print(imgur)
+        guard let image = imgur.images?.first else {
+            return
+        }
+
+        titleLabel.text = image.title ?? image.imageDescription ?? imgur.title
+
         let filter = AspectScaledToFillSizeWithRoundedCornersFilter(
             size: pictureImageView.frame.size,
-            radius: 20.0
-        )
+            radius: 4)
+        let placeholderImage = UIImage(named: "pattern")!
+
+        guard let imageUrl = URL(string: image.link) else {
+            return
+        }
 
         pictureImageView.af_setImage(
-            withURL: url,
+            withURL: imageUrl,
             placeholderImage: placeholderImage,
             filter: filter,
             imageTransition: .crossDissolve(0.2)
         )
-
-    }
-
-    var photo: Photo? {
-        didSet {
-            if let photo = photo {
-//                pictureImageView.image = photo.image
-//                titleLabel.text = photo.caption
-            }
-        }
     }
 
 }
