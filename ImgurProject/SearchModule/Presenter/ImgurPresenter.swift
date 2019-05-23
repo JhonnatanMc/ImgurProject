@@ -14,10 +14,8 @@ class ImgurPresenter: BasePresenter {
         super.unBind()
     }
 
-//    func bind(withView view: ImgurView) {
-//        super.bind(withView: view)
-//        print("binding")
-//    }
+
+
 
 }
 
@@ -27,9 +25,20 @@ extension ImgurPresenter: ImgurPresenterProtocol {
         print("removing")
     }
 
-
     func bind(withView view: ImgurView) {
         super.bind(withView: view)
+    }
+
+    func search(with imageTitle: String) {
+        guard let view = self.view as? ImgurView else {
+            return
+        }
+
+        guard imageTitle.isEmpty else {
+            view.cleanView()
+            return
+        }
+
     }
 
     func dismissKeyboard() {

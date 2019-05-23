@@ -159,18 +159,23 @@ extension ImgurViewController: UISearchBarDelegate {
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-
-        if !searchText.isEmpty {
-            //            self.addSpinner()
-            //            self.isSearchActived = true
-            self.searchPhoto(searchText)
-        } else {
-            photos.removeAll()
-            collectionView.reloadData()
-            collectionView.collectionViewLayout.invalidateLayout()
-            //            self.isSearchActived = false
-            (presenter as? ImgurPresenterProtocol)?.dimissKeyboard()
+        guard let presenter = self.presenter as? ImgurPresenterProtocol else {
+            return
         }
+
+        presenter.search(with: searchText)
+
+//        if !searchText.isEmpty {
+//            //            self.addSpinner()
+//            //            self.isSearchActived = true
+//            self.searchPhoto(searchText)
+//        } else {
+//            photos.removeAll()
+//            collectionView.reloadData()
+//            collectionView.collectionViewLayout.invalidateLayout()
+//            //            self.isSearchActived = false
+//            (presenter as? ImgurPresenterProtocol)?.dismissKeyboard()
+//        }
     }
 
 
@@ -206,6 +211,14 @@ extension ImgurViewController: UISearchBarDelegate {
 }
 
 extension ImgurViewController: ImgurView {
+
+    func cleanView() {
+        photos.removeAll()
+        collectionView.reloadData()
+        collectionView.collectionViewLayout.invalidateLayout()
+        searchBar.text = ""
+        (presenter as? ImgurPresenterProtocol)?.dismissKeyboard()
+    }
 
     @objc func dismissKeyboard() {
         self.view.endEditing(true)

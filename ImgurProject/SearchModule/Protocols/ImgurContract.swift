@@ -12,6 +12,8 @@ import Foundation
 protocol ImgurView: BaseView {
 
     func dismissKeyboard()
+
+    func cleanView()
 }
 
 protocol ImgurPresenterProtocol: BasePresenterProtocol {
@@ -23,4 +25,6 @@ protocol ImgurPresenterProtocol: BasePresenterProtocol {
     func removeLicense()
 
     func dismissKeyboard()
+
+    func search(with imageTitle: String)
 }
