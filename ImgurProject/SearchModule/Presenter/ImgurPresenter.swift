@@ -11,23 +11,10 @@ import Foundation
 class ImgurPresenter: BasePresenter {
 
     private var currentPage = 0
+    private var photos = [Imgur]()
 
     override func unBind() {
         super.unBind()
-    }
-
-    func searchPhotos(ImageName: String) {
-        let page = String((currentPage+1))
-        WebServiceManager.sharedService.requestAPI(textSearch: ImageName, page: page) {  (JSON: Data?, status: Int) in
-            do {
-                if status == 200 {
-                    let photosObject = try JSONDecoder().decode(Result.self, from: JSON!)
-                    (self.view as? ImgurView)?.showPhotos(photosArr: photosObject.data)
-                }
-            } catch {
-                print("Unable to reach server. Please check Internet connectivity and try again later.")
-            }
-        }
     }
 
 }
@@ -50,8 +37,35 @@ extension ImgurPresenter: ImgurPresenterProtocol {
             return
         }
 
-        searchPhotos(ImageName: searchText)
+//        searchPhotos(ImageName: searchText)
     }
+
+    func searchPhotos(ImageName: String, isPrefetch: Bool) {
+        currentPage = isPrefetch ? (currentPage + 1) : currentPage
+        let page = String(currentPage)
+        print(currentPage)
+        WebServiceManager.sharedService.requestAPI(textSearch: ImageName, page: page) {  (JSON: Data?, status: Int) in
+            do {
+                if status == 200 {
+                    let photosObject = try JSONDecoder().decode(Result.self, from: JSON!)
+                    if isPrefetch {
+                        self.photos.append(contentsOf: photosObject.data)
+                    } else {
+                        self.photos = photosObject.data
+                    }
+
+                    (self.view as? ImgurView)?.showPhotos(photosArr: self.photos)
+                }
+            } catch {
+                print("Unable to reach server. Please check Internet connectivity and try again later.")
+            }
+        }
+    }
+
+    func isValidName(with imageTitle: String) -> Bool {
+        return imageTitle.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty
+    }
+
 
     func dismissKeyboard() {
         (self.view as? ImgurView)?.dismissKeyboard()

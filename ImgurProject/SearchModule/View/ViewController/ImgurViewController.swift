@@ -115,24 +115,21 @@ extension ImgurViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
             if  indexPath.item > (photos.count  - 5) {
-                WebServiceManager.sharedService.requestAPI(textSearch: "cats", page: "2") {  (JSON: Data?, status: Int) in
-                    do {
-                        if status == 200 {
-                            let myStructDictionary = try JSONDecoder().decode(Result.self, from: JSON!)
-                            self.photos.append(contentsOf : myStructDictionary.data)
-                            self.collectionView.reloadData()
-                            self.collectionView.collectionViewLayout.invalidateLayout()
-                        }
-                    } catch {
-                        //                callback(Array<Artist>(), true, "Unable to reach server. Please check Internet connectivity and try again later.", status)
-                    }
+                guard let text = searchBar.text, let presenter = (presenter as? ImgurPresenterProtocol) else {
+                    return
                 }
+
+                let isValidText =  presenter.isValidName(with: text)
+
+                guard !isValidText else {
+                    return
+                }
+
+                presenter.searchPhotos(ImageName: text, isPrefetch: true)
+                break
             }
         }
     }
-
-
-
 }
 
 // MARK: - ImageLayoutDelegate
@@ -176,33 +173,14 @@ extension ImgurViewController: UISearchBarDelegate {
             return
         }
 
-        presenter.isValidName(with: searchText)
-    }
+        let isValidText = presenter.isValidName(with: searchText)
 
-    func searchPhoto(_ searchText: String) {
-        //        timer?.invalidate()
-        //
-        //        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.dismissKeyboard), userInfo: searchBar, repeats: false)
-        self.searchTitleImage = searchText.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-
-        guard !searchTitleImage.isEmpty else {
+        guard !isValidText else {
+            presenter.cleanView()
             return
         }
 
-        let photoName = searchTitleImage.replacingOccurrences(of: " ", with: "%20")
-        WebServiceManager.sharedService.requestAPI(textSearch: photoName, page: "1") {  (JSON: Data?, status: Int) in
-            do {
-                if status == 200 {
-                    let myStructDictionary = try JSONDecoder().decode(Result.self, from: JSON!)
-                    self.photos = myStructDictionary.data
-                    self.collectionView.reloadData()
-                    self.collectionView.collectionViewLayout.invalidateLayout()
-                }
-            } catch {
-                //                callback(Array<Artist>(), true, "Unable to reach server. Please check Internet connectivity and try again later.", status)
-            }
-        }
-
+        presenter.searchPhotos(ImageName: searchText, isPrefetch: false)
     }
 
 }
@@ -213,6 +191,7 @@ extension ImgurViewController: ImgurView {
         photos.removeAll()
         collectionView.reloadData()
         collectionView.collectionViewLayout.invalidateLayout()
+        collectionView.setContentOffset(CGPoint(x:0,y:0), animated: false)
         searchBar.text = ""
         (presenter as? ImgurPresenterProtocol)?.dismissKeyboard()
     }
