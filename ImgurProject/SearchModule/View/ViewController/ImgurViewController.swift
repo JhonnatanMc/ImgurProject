@@ -48,8 +48,6 @@ class ImgurViewController: BaseViewController {
         }
 
         presenter.bind(withView: self)
-
-        presenter.removeLicense()
     }
 
     // MARK: Public Methods
@@ -207,6 +205,12 @@ extension ImgurViewController: ImgurView {
         collectionView.collectionViewLayout.invalidateLayout()
         searchBar.text = ""
         (presenter as? ImgurPresenterProtocol)?.dismissKeyboard()
+    }
+
+    func showPhotos(photosArr: [Imgur]) {
+        photos = photosArr
+        collectionView.reloadData()
+        collectionView.collectionViewLayout.invalidateLayout()
     }
 
     @objc func dismissKeyboard() {

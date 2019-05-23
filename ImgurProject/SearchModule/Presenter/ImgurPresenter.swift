@@ -16,16 +16,23 @@ class ImgurPresenter: BasePresenter {
         super.unBind()
     }
 
-
-
+    func searchPhotos(ImageName: String) {
+        let page = String((currentPage+1))
+        WebServiceManager.sharedService.requestAPI(textSearch: ImageName, page: page) {  (JSON: Data?, status: Int) in
+            do {
+                if status == 200 {
+                    let photosObject = try JSONDecoder().decode(Result.self, from: JSON!)
+                    (self.view as? ImgurView)?.showPhotos(photosArr: photosObject.data)
+                }
+            } catch {
+                print("Unable to reach server. Please check Internet connectivity and try again later.")
+            }
+        }
+    }
 
 }
 
 extension ImgurPresenter: ImgurPresenterProtocol {
-
-    func removeLicense() {
-        print("removing")
-    }
 
     func bind(withView view: ImgurView) {
         super.bind(withView: view)
@@ -43,6 +50,7 @@ extension ImgurPresenter: ImgurPresenterProtocol {
             return
         }
 
+        searchPhotos(ImageName: searchText)
     }
 
     func dismissKeyboard() {
@@ -50,6 +58,7 @@ extension ImgurPresenter: ImgurPresenterProtocol {
     }
 
     func cleanView() {
+        currentPage = 0
         (self.view as? ImgurView)?.cleanView()
     }
 

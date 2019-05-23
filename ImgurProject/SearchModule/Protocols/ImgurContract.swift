@@ -14,6 +14,8 @@ protocol ImgurView: BaseView {
     func dismissKeyboard()
 
     func cleanView()
+
+    func showPhotos(photosArr: [Imgur])
 }
 
 protocol ImgurPresenterProtocol: BasePresenterProtocol {
@@ -21,8 +23,6 @@ protocol ImgurPresenterProtocol: BasePresenterProtocol {
     func bind(withView view: ImgurView)
 
     func unBind()
-
-    func removeLicense()
 
     func dismissKeyboard()
 
