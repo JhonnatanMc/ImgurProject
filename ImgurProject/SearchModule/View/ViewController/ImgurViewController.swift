@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ImgurViewController: UIViewController {
+class ImgurViewController: BaseViewController {
 
     // MARK: - IBOutlets
 
@@ -24,6 +24,7 @@ class ImgurViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter = ImgurPresenter()
         collectionView.backgroundColor = .clear
         collectionView.contentInset = UIEdgeInsets(top: 23, left: 16, bottom: 10, right: 16)
         collectionView.dataSource = self
@@ -41,6 +42,14 @@ class ImgurViewController: UIViewController {
         }
 
         view.backgroundColor = UIColor(patternImage: patternImage)
+
+        guard let presenter = presenter as? ImgurPresenterProtocol else {
+            return
+        }
+
+        presenter.bind(withView: self)
+
+        presenter.removeLicense()
     }
 
     // MARK: Public Methods
@@ -55,10 +64,6 @@ class ImgurViewController: UIViewController {
         let placeholderAttributes: [NSAttributedString.Key : AnyObject] = [NSAttributedString.Key.foregroundColor: UIColor.gray, NSAttributedString.Key.font:  UIFont.systemFont(ofSize: 14)]
         let textFieldPlaceHolder = searchBar.value(forKey: "searchField") as? UITextField
         textFieldPlaceHolder?.attributedPlaceholder = NSAttributedString(string: "Search your Image", attributes: placeholderAttributes)
-    }
-
-    @objc func dismissKeyboard() {
-        self.view.endEditing(true)
     }
 
 }
@@ -84,7 +89,7 @@ extension ImgurViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let albumView = storyboard.instantiateViewController(withIdentifier: "ImageDetailViewController") as! ImageDetailViewController
-//        albumView.artistName = self.searchText
+        //        albumView.artistName = self.searchText
         self.navigationController?.pushViewController(albumView, animated: true)
     }
 }
@@ -108,9 +113,9 @@ extension ImgurViewController: UICollectionViewDataSourcePrefetching {
                     } catch {
                         //                callback(Array<Artist>(), true, "Unable to reach server. Please check Internet connectivity and try again later.", status)
                     }
+                }
             }
         }
-    }
     }
 
 
@@ -150,7 +155,7 @@ extension ImgurViewController: UISearchBarDelegate {
     }
 
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        self.dismissKeyboard()
+        (presenter as? ImgurPresenterProtocol)?.dismissKeyboard()
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -160,11 +165,11 @@ extension ImgurViewController: UISearchBarDelegate {
             //            self.isSearchActived = true
             self.searchPhoto(searchText)
         } else {
-           photos.removeAll()
+            photos.removeAll()
             collectionView.reloadData()
             collectionView.collectionViewLayout.invalidateLayout()
             //            self.isSearchActived = false
-            self.dismissKeyboard()
+            (presenter as? ImgurPresenterProtocol)?.dimissKeyboard()
         }
     }
 
@@ -192,7 +197,7 @@ extension ImgurViewController: UISearchBarDelegate {
                     self.collectionView.collectionViewLayout.invalidateLayout()
                 }
             } catch {
-    //                callback(Array<Artist>(), true, "Unable to reach server. Please check Internet connectivity and try again later.", status)
+                //                callback(Array<Artist>(), true, "Unable to reach server. Please check Internet connectivity and try again later.", status)
             }
         }
 
@@ -200,3 +205,10 @@ extension ImgurViewController: UISearchBarDelegate {
 
 }
 
+extension ImgurViewController: ImgurView {
+
+    @objc func dismissKeyboard() {
+        self.view.endEditing(true)
+    }
+
+}
