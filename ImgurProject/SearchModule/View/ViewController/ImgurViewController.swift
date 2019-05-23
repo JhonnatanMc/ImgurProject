@@ -22,8 +22,8 @@ class ImgurViewController: BaseViewController {
 
     // MARK: - Properties
 
-    internal var searchTitleImage: String = ""
-    var photos = [Imgur]()
+    private var photos = [Imgur]()
+    private var timer: Timer? = nil
     
     // MARK: - Life cycle
 
@@ -181,6 +181,8 @@ extension ImgurViewController: UISearchBarDelegate {
             return
         }
 
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.dismissKeyboard), userInfo: searchBar, repeats: false)
         presenter.searchPhotos(ImageName: searchText, isPrefetch: false)
     }
 
