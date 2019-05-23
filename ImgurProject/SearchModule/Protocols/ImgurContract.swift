@@ -6,8 +6,7 @@
 //  Copyright © 2019 Jhonnatan Macias. All rights reserved.
 //
 
-import Foundation
-
+import UIKit
 
 protocol ImgurView: BaseView {
 
@@ -33,4 +32,6 @@ protocol ImgurPresenterProtocol: BasePresenterProtocol {
     func cleanView()
 
     func searchPhotos(ImageName: String, isPrefetch: Bool)
+
+    func didSelectItem(image: Imgur, view: UIViewController)
 }

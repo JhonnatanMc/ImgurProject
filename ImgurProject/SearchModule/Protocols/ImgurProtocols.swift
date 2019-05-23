@@ -6,7 +6,7 @@
 //  Copyright © 2019 Jhonnatan Macias. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 
 protocol SearchInteractorResultProtocol {
@@ -17,5 +17,13 @@ protocol SearchInteractorResultProtocol {
 protocol SearchInteractorProtocol {
     //Presenter -> Interactor
     var presenter: ImgurPresenter? { get set }
+}
 
+protocol onCellTouchListener : class {
+    func onCellTouch<Cell: UICollectionViewCell>(_ cell: Cell, object: Any)
+}
+
+protocol ImgurWireframeProtocol {
+    //Presenter -> Wireframe
+    func showImageDetails(image: Imgur, from classRef: UIViewController)
 }

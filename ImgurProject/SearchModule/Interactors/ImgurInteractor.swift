@@ -25,11 +25,3 @@ class ImgurInteractor: SearchInteractorProtocol {
         }
     }
 }
-
-//
-//protocol SearchInteractorProtocol {
-//    //Interactor -> Protocol
-//    func didFinishFetchingRecentSearchResults(allSearches: [Imgur])
-////    func routeDetailFetched(route: GoogleRoute?,errorMessage: String?)
-//
-//}

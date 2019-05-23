@@ -30,11 +30,9 @@ class ImgurCollectionViewCell: UICollectionViewCell {
             return
         }
 
-        titleLabel.text = image.title ?? image.imageDescription ?? imgur.title
+        titleLabel.text = imgur.title ?? image.imageDescription ??  image.title 
 
-        let filter = AspectScaledToFillSizeWithRoundedCornersFilter(
-            size: pictureImageView.frame.size,
-            radius: 4)
+        let filter = AspectScaledToFillSizeWithRoundedCornersFilter(size: pictureImageView.frame.size, radius: 4)
         let placeholderImage = UIImage(named: "placeholder")!
 
         guard let imageUrl = URL(string: image.link) else {

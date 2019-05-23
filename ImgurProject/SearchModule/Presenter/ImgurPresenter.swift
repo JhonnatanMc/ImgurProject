@@ -6,7 +6,7 @@
 //  Copyright © 2019 Jhonnatan Macias. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class ImgurPresenter: BasePresenter {
 
@@ -15,20 +15,26 @@ class ImgurPresenter: BasePresenter {
     private var isPrefetch: Bool = false
 
     var imgurInteractor: ImgurInteractor?
+    var imgurRouteWireframe: ImgurRouteWireFrame?
 
     override func unBind() {
         super.unBind()
     }
 
-    required init(imgurInteractor: ImgurInteractor) {
+    required init(imgurInteractor: ImgurInteractor, imgurRouteWireframe: ImgurRouteWireFrame) {
         super.init()
         self.imgurInteractor = imgurInteractor
+        self.imgurRouteWireframe = imgurRouteWireframe
         self.loadSearchPageComponents()
     }
 
 }
 
 extension ImgurPresenter: ImgurPresenterProtocol {
+
+    func didSelectItem(image: Imgur, view: UIViewController) {
+        imgurRouteWireframe?.showImageDetails(image: image, from: view)
+    }
 
     func loadSearchPageComponents() {
         imgurInteractor?.presenter = self

@@ -7,26 +7,26 @@
 //
 
 import UIKit
+import Alamofire
 
-class ImageDetailViewController: UIViewController {
+class ImageDetailViewController: BaseViewController {
 
     @IBOutlet weak var pictureImageView: UIImageView!
+    var image: Imgur?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-    }
-    
+        guard let photo = image, let photoDetail = photo.images?.first else {
+            return
+        }
 
-    /*
-    // MARK: - Navigation
+        guard let imageUrl = URL(string: photoDetail.link) else {
+            return
+        }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        pictureImageView.af_setImage(withURL: imageUrl)
+        title = photo.title ??  photoDetail.title ?? photoDetail.imageDescription 
     }
-    */
 
 }

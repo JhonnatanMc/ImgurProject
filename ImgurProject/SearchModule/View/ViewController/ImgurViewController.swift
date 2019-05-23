@@ -11,6 +11,10 @@ import Foundation
 
 class ImgurViewController: BaseViewController {
 
+    struct K {
+        static let lastCellsVisible = 10
+    }
+
     // MARK: - IBOutlets
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -25,7 +29,7 @@ class ImgurViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter = ImgurPresenter(imgurInteractor: ImgurInteractor())
+        presenter = ImgurPresenter(imgurInteractor: ImgurInteractor(), imgurRouteWireframe: ImgurRouteWireFrame())
         setupCollectionView()
         setStylesforNavigationBar("Imgur")
         setupSearchBar()
@@ -100,10 +104,8 @@ extension ImgurViewController: UICollectionViewDataSource {
 
 extension ImgurViewController: UICollectionViewDelegate {
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let albumView = storyboard.instantiateViewController(withIdentifier: "ImageDetailViewController") as! ImageDetailViewController
-        self.navigationController?.pushViewController(albumView, animated: true)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        (presenter as? ImgurPresenterProtocol)?.didSelectItem(image: photos[indexPath.row], view: self)
     }
 }
 
@@ -113,7 +115,7 @@ extension ImgurViewController: UICollectionViewDataSourcePrefetching {
 
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
-            if  indexPath.item > (photos.count  - 5) {
+            if  indexPath.item > (photos.count - K.lastCellsVisible) {
                 guard let text = searchBar.text, let presenter = (presenter as? ImgurPresenterProtocol) else {
                     return
                 }
