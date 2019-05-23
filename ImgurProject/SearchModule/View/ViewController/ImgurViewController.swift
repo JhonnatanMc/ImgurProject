@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 class ImgurViewController: BaseViewController {
 
@@ -25,6 +26,19 @@ class ImgurViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter = ImgurPresenter()
+        setupCollectionView()
+        setStylesforNavigationBar("Imgur")
+        setupSearchBar()
+        setupView()
+
+        guard let presenter = presenter as? ImgurPresenterProtocol else {
+            return
+        }
+
+        presenter.bind(withView: self)
+    }
+
+    func setupCollectionView() {
         collectionView.backgroundColor = .clear
         collectionView.contentInset = UIEdgeInsets(top: 23, left: 16, bottom: 10, right: 16)
         collectionView.dataSource = self
@@ -34,20 +48,14 @@ class ImgurViewController: BaseViewController {
         if let layout = collectionView?.collectionViewLayout as? ImageLayout {
             layout.delegate = self
         }
+    }
 
-        setupSearchBar()
-
+    func setupView() {
         guard let patternImage = UIImage(named: "pattern") else {
             return
         }
 
         view.backgroundColor = UIColor(patternImage: patternImage)
-
-        guard let presenter = presenter as? ImgurPresenterProtocol else {
-            return
-        }
-
-        presenter.bind(withView: self)
     }
 
     // MARK: Public Methods
@@ -55,13 +63,17 @@ class ImgurViewController: BaseViewController {
     func setupSearchBar() {
         searchBar.delegate = self
         searchBar.returnKeyType = .done
-
+        searchBar.barTintColor = UIColor(red: 37.0/255.0, green: 59.0/255.0, blue: 86.0/255.0, alpha: 1.0)
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = "Cancel"
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes([NSAttributedString.Key(rawValue: NSAttributedString.Key.foregroundColor.rawValue): UIColor.white], for: .normal)
 
         let placeholderAttributes: [NSAttributedString.Key : AnyObject] = [NSAttributedString.Key.foregroundColor: UIColor.gray, NSAttributedString.Key.font:  UIFont.systemFont(ofSize: 14)]
         let textFieldPlaceHolder = searchBar.value(forKey: "searchField") as? UITextField
         textFieldPlaceHolder?.attributedPlaceholder = NSAttributedString(string: "Search your Image", attributes: placeholderAttributes)
+    }
+
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        (presenter as? ImgurPresenterProtocol)?.dismissKeyboard()
     }
 
 }
@@ -75,7 +87,12 @@ extension ImgurViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImgurCollectionViewCell", for: indexPath as IndexPath) as! ImgurCollectionViewCell
+
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImgurCollectionViewCell", for: indexPath)
+            as? ImgurCollectionViewCell else {
+                return UICollectionViewCell()
+        }
+
         cell.configureCell(imgur: photos[indexPath.row])
         return cell
     }
@@ -87,7 +104,6 @@ extension ImgurViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let albumView = storyboard.instantiateViewController(withIdentifier: "ImageDetailViewController") as! ImageDetailViewController
-        //        albumView.artistName = self.searchText
         self.navigationController?.pushViewController(albumView, animated: true)
     }
 }
@@ -97,7 +113,6 @@ extension ImgurViewController: UICollectionViewDelegate {
 extension ImgurViewController: UICollectionViewDataSourcePrefetching {
 
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        print("prefetch \(indexPaths)")
         for indexPath in indexPaths {
             if  indexPath.item > (photos.count  - 5) {
                 WebServiceManager.sharedService.requestAPI(textSearch: "cats", page: "2") {  (JSON: Data?, status: Int) in
@@ -124,9 +139,7 @@ extension ImgurViewController: UICollectionViewDataSourcePrefetching {
 
 extension ImgurViewController: ImageLayoutDelegate {
 
-    func collectionView(_ collectionView: UICollectionView,
-                        heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
-
+    func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
         guard let imageHeight = photos[indexPath.item].images?.first?.height else {
             return 300
         }
@@ -141,7 +154,7 @@ extension ImgurViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar .resignFirstResponder()
         searchBar.setShowsCancelButton(false, animated: true)
-        (presenter as? ImgurPresenterProtocol)?.cleanView()
+        (presenter as? ImgurPresenterProtocol)?.dismissKeyboard()
     }
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -151,6 +164,7 @@ extension ImgurViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         searchBar.setShowsCancelButton(false, animated: true)
+        (presenter as? ImgurPresenterProtocol)?.cleanView()
     }
 
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
@@ -165,10 +179,6 @@ extension ImgurViewController: UISearchBarDelegate {
         presenter.isValidName(with: searchText)
     }
 
-
-    /// search an artist
-    ///
-    /// - Parameter searchText: the name of artist for looking
     func searchPhoto(_ searchText: String) {
         //        timer?.invalidate()
         //
