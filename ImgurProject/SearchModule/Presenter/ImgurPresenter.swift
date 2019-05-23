@@ -10,6 +10,8 @@ import Foundation
 
 class ImgurPresenter: BasePresenter {
 
+    private var currentPage = 0
+
     override func unBind() {
         super.unBind()
     }
@@ -29,12 +31,14 @@ extension ImgurPresenter: ImgurPresenterProtocol {
         super.bind(withView: view)
     }
 
-    func search(with imageTitle: String) {
+    func isValidName(with imageTitle: String) {
         guard let view = self.view as? ImgurView else {
             return
         }
 
-        guard imageTitle.isEmpty else {
+        let searchText = imageTitle.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+
+        guard !searchText.isEmpty else {
             view.cleanView()
             return
         }
@@ -43,6 +47,10 @@ extension ImgurPresenter: ImgurPresenterProtocol {
 
     func dismissKeyboard() {
         (self.view as? ImgurView)?.dismissKeyboard()
+    }
+
+    func cleanView() {
+        (self.view as? ImgurView)?.cleanView()
     }
 
 }

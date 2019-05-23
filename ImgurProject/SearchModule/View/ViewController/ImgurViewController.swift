@@ -143,6 +143,7 @@ extension ImgurViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar .resignFirstResponder()
         searchBar.setShowsCancelButton(false, animated: true)
+        (presenter as? ImgurPresenterProtocol)?.cleanView()
     }
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -163,19 +164,7 @@ extension ImgurViewController: UISearchBarDelegate {
             return
         }
 
-        presenter.search(with: searchText)
-
-//        if !searchText.isEmpty {
-//            //            self.addSpinner()
-//            //            self.isSearchActived = true
-//            self.searchPhoto(searchText)
-//        } else {
-//            photos.removeAll()
-//            collectionView.reloadData()
-//            collectionView.collectionViewLayout.invalidateLayout()
-//            //            self.isSearchActived = false
-//            (presenter as? ImgurPresenterProtocol)?.dismissKeyboard()
-//        }
+        presenter.isValidName(with: searchText)
     }
 
 

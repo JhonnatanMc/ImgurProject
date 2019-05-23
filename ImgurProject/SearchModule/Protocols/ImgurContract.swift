@@ -26,5 +26,7 @@ protocol ImgurPresenterProtocol: BasePresenterProtocol {
 
     func dismissKeyboard()
 
-    func search(with imageTitle: String)
+    func isValidName(with imageTitle: String)
+
+    func cleanView()
 }
