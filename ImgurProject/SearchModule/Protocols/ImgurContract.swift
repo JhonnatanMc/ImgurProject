@@ -20,6 +20,8 @@ protocol ImgurView: BaseView {
 
 protocol ImgurPresenterProtocol: BasePresenterProtocol {
 
+    var imgurInteractor: ImgurInteractor? {get set}
+
     func bind(withView view: ImgurView)
 
     func unBind()

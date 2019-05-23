@@ -25,7 +25,7 @@ class ImgurViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter = ImgurPresenter()
+        presenter = ImgurPresenter(imgurInteractor: ImgurInteractor())
         setupCollectionView()
         setStylesforNavigationBar("Imgur")
         setupSearchBar()
