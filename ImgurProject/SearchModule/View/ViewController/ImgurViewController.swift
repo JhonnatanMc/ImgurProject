@@ -188,6 +188,14 @@ extension ImgurViewController: UISearchBarDelegate {
 
 extension ImgurViewController: ImgurView {
 
+    func displaySpinner() {
+        showLoadingSpinner()
+    }
+
+    func hideSpinner() {
+        hideLoadingSpinner()
+    }
+
     func cleanView() {
         photos.removeAll()
         collectionView.reloadData()

@@ -48,6 +48,7 @@ extension ImgurPresenter: ImgurPresenterProtocol {
         currentPage = isPrefetch ? (currentPage + 1) : currentPage
         let page = String(currentPage)
         self.isPrefetch = isPrefetch
+        (view as? ImgurView)?.displaySpinner()
         imgurInteractor?.fetchRecentSearch(ImageName: ImageName, page: page)
     }
 
@@ -81,6 +82,7 @@ extension ImgurPresenter: SearchInteractorResultProtocol {
             photos = AllPhotos
         }
 
+        (view as? ImgurView)?.hideSpinner()
         (self.view as? ImgurView)?.showPhotos(photosArr: photos)
 
     }

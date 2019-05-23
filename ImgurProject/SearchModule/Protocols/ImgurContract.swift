@@ -15,6 +15,10 @@ protocol ImgurView: BaseView {
     func cleanView()
 
     func showPhotos(photosArr: [Imgur])
+
+    func displaySpinner()
+
+    func hideSpinner()
 }
 
 protocol ImgurPresenterProtocol: BasePresenterProtocol {

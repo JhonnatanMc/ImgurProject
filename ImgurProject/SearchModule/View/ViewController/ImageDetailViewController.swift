@@ -17,16 +17,13 @@ class ImageDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        guard let photo = image, let photoDetail = photo.images?.first else {
-            return
-        }
-
-        guard let imageUrl = URL(string: photoDetail.link) else {
+        guard let photo = image, let photoDetail = photo.images?.first,
+            let imageUrl = URL(string: photoDetail.link)else {
             return
         }
 
         pictureImageView.af_setImage(withURL: imageUrl)
-        title = photo.title ??  photoDetail.title ?? photoDetail.imageDescription 
+        title = photo.title ??  photoDetail.title ?? photoDetail.imageDescription
     }
 
 }
