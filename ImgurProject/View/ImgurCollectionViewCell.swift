@@ -22,6 +22,7 @@ class ImgurCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         pictureImageView.image = nil
+        titleLabel.text = ""
     }
 
     func configureCell(imgur: Imgur) {
@@ -34,7 +35,7 @@ class ImgurCollectionViewCell: UICollectionViewCell {
         let filter = AspectScaledToFillSizeWithRoundedCornersFilter(
             size: pictureImageView.frame.size,
             radius: 4)
-        let placeholderImage = UIImage(named: "pattern")!
+        let placeholderImage = UIImage(named: "placeholder")!
 
         guard let imageUrl = URL(string: image.link) else {
             return

@@ -20,7 +20,9 @@ struct Result {
 
         do {
             let container = try decoder.container(keyedBy: ResultKeys.self)
-            data =  try container.decode([Imgur].self, forKey: .data)
+            if let dataResult = try container.decodeIfPresent([Imgur].self, forKey: .data) {
+                data = dataResult.filter { $0.images!.count > 0 }
+            }
         } catch let error {
             print("error parse result result \(error)")
         }
