@@ -73,6 +73,7 @@ extension ImgurPresenter: ImgurPresenterProtocol {
 
     func cleanView() {
         currentPage = 0
+        photos = [Imgur]()
         (self.view as? ImgurView)?.cleanView()
     }
 

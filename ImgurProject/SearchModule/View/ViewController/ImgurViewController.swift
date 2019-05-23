@@ -38,9 +38,10 @@ class ImgurViewController: BaseViewController {
         presenter.bind(withView: self)
     }
 
+    // MARK: Public Methods
+
     func setupCollectionView() {
         collectionView.backgroundColor = .clear
-        collectionView.contentInset = UIEdgeInsets(top: 23, left: 16, bottom: 10, right: 16)
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.prefetchDataSource = self
@@ -57,8 +58,6 @@ class ImgurViewController: BaseViewController {
 
         view.backgroundColor = UIColor(patternImage: patternImage)
     }
-
-    // MARK: Public Methods
 
     func setupSearchBar() {
         searchBar.delegate = self
@@ -138,7 +137,7 @@ extension ImgurViewController: ImageLayoutDelegate {
 
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
         guard let imageHeight = photos[indexPath.item].images?.first?.height else {
-            return 300
+            return 200
         }
 
         return CGFloat(imageHeight)
