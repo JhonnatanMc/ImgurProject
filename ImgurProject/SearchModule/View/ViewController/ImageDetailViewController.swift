@@ -11,19 +11,40 @@ import Alamofire
 
 class ImageDetailViewController: BaseViewController {
 
+    // MARK: - IBOutlets
+
     @IBOutlet weak var pictureImageView: UIImageView!
+
+    // MARK: - Properties
+
     var image: Imgur?
+
+    // MARK: - Life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        guard let photo = image, let photoDetail = photo.images?.first,
-            let imageUrl = URL(string: photoDetail.link)else {
+        guard let presenter = (presenter as? ImgurDetailPresenterProtocol), let imageDetail = image else {
             return
         }
 
-        pictureImageView.af_setImage(withURL: imageUrl)
-        title = photo.title ??  photoDetail.title ?? photoDetail.imageDescription
+        presenter.bind(withView: self)
+        presenter.setTitle(image: imageDetail)
+        presenter.getImage(image: imageDetail)
+    }
+
+}
+
+// MARK: - ImgurDetailView extension
+
+extension ImageDetailViewController: ImgurDetailView {
+
+    func setPhoto(url: URL) {
+        pictureImageView.af_setImage(withURL: url)
+    }
+
+    func showTitle(title: String) {
+        self.title = title
     }
 
 }

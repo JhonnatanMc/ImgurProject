@@ -12,7 +12,7 @@ import Foundation
 class ImgurViewController: BaseViewController {
 
     struct K {
-        static let lastCellsVisible = 10
+        static let lastTenCellsVisible = 10
     }
 
     // MARK: - IBOutlets
@@ -29,7 +29,7 @@ class ImgurViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter = ImgurPresenter(imgurInteractor: ImgurInteractor(), imgurRouteWireframe: ImgurRouteWireFrame())
+        presenter = ImgurFactory.makeImgurPresenter()
         setupCollectionView()
         setStylesforNavigationBar("Imgur")
         setupSearchBar()
@@ -115,12 +115,12 @@ extension ImgurViewController: UICollectionViewDataSourcePrefetching {
 
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
-            if  indexPath.item > (photos.count - K.lastCellsVisible) {
+            if  indexPath.item > (photos.count - K.lastTenCellsVisible) {
                 guard let text = searchBar.text, let presenter = (presenter as? ImgurPresenterProtocol) else {
                     return
                 }
 
-                let isValidText =  presenter.isValidName(with: text)
+                let isValidText = presenter.isValidName(with: text)
 
                 guard !isValidText else {
                     return
@@ -146,6 +146,8 @@ extension ImgurViewController: ImageLayoutDelegate {
     }
 
 }
+
+// MARK: - UISearchBarDelegate
 
 extension ImgurViewController: UISearchBarDelegate {
     
@@ -187,6 +189,8 @@ extension ImgurViewController: UISearchBarDelegate {
     }
 
 }
+
+// MARK: - ImgurView extension
 
 extension ImgurViewController: ImgurView {
 

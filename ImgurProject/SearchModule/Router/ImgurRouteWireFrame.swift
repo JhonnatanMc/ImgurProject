@@ -11,8 +11,7 @@ import UIKit
 class ImgurRouteWireFrame {
 
     func navigateToImageDetails(image: Imgur, from classRef: UIViewController) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let ImageDetailView = storyboard.instantiateViewController(withIdentifier: "ImageDetailViewController") as! ImageDetailViewController
+        let ImageDetailView = ImgurFactory.makeDetailViewController()
         ImageDetailView.image = image
         guard let sourceNavigationController = classRef.navigationController else {
             classRef.present(ImageDetailView, animated: true, completion: nil)
