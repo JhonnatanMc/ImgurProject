@@ -11,7 +11,7 @@ import Foundation
 import AlamofireImage
 
 class ImgurCollectionViewCell: UICollectionViewCell {
-    
+
     @IBOutlet weak var pictureImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
 
@@ -30,8 +30,7 @@ class ImgurCollectionViewCell: UICollectionViewCell {
             return
         }
 
-        titleLabel.text = imgur.title ?? image.imageDescription ??  image.title 
-
+        titleLabel.text = imgur.title ?? image.imageDescription ?? image.title
         let filter = AspectScaledToFillSizeWithRoundedCornersFilter(size: pictureImageView.frame.size, radius: 4)
         let placeholderImage = UIImage(named: "placeholder")!
 

@@ -19,6 +19,10 @@ protocol ImgurView: BaseView {
     func displaySpinner()
 
     func hideSpinner()
+
+    func getImageTitle() -> String?
+
+    func getViewController() -> UIViewController
 }
 
 protocol ImgurPresenterProtocol: BasePresenterProtocol {

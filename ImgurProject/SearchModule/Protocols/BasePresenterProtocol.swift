@@ -21,6 +21,7 @@ protocol BasePresenterProtocol {
 }
 
 class BasePresenter: NSObject, BasePresenterProtocol {
+
     weak var view: BaseView?
 
     func bind(withView view: BaseView) {

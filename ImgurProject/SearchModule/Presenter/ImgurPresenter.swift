@@ -10,16 +10,15 @@ import UIKit
 
 class ImgurPresenter: BasePresenter {
 
+    // MARK: - Properties
+
     private var currentPage = 0
     private var photos = [Imgur]()
     private var isPrefetch: Bool = false
-
     var imgurInteractor: ImgurInteractor?
     var imgurRouteWireframe: ImgurRouteWireFrame?
 
-    override func unBind() {
-        super.unBind()
-    }
+    // MARK: - Initializers
 
     required init(imgurInteractor: ImgurInteractor, imgurRouteWireframe: ImgurRouteWireFrame) {
         super.init()
@@ -28,7 +27,13 @@ class ImgurPresenter: BasePresenter {
         self.loadComponents()
     }
 
+    override func unBind() {
+        super.unBind()
+    }
+
 }
+
+// MARK: - ImgurPresenterProtocol
 
 extension ImgurPresenter: ImgurPresenterProtocol {
 
@@ -69,6 +74,8 @@ extension ImgurPresenter: ImgurPresenterProtocol {
 
 }
 
+// MARK: - SearchInteractorResultProtocol
+
 extension ImgurPresenter: SearchInteractorResultProtocol {
 
     func didFinishFetchingWithError() {
@@ -89,7 +96,39 @@ extension ImgurPresenter: SearchInteractorResultProtocol {
 
         (view as? ImgurView)?.hideSpinner()
         (self.view as? ImgurView)?.showPhotos(photosArr: photos)
+    }
 
+}
+
+// MARK: - onCellTouchListener
+
+extension ImgurPresenter: onCellTouchListener {
+
+    func onCellTouch<Cell>(_ cell: Cell, object: Any) where Cell: UICollectionViewCell {
+        guard let view = (view as? ImgurView), let photo = (object as? Imgur) else {
+            return
+        }
+
+        didSelectItem(image: photo, view: view.getViewController())
+    }
+}
+
+// MARK: - CollectionViewPrefetchListener
+
+extension ImgurPresenter: CollectionViewPrefetchListener {
+
+    func prefetchData() {
+        guard let view = (view as? ImgurView), let photoTitle = view.getImageTitle() else {
+            return
+        }
+
+        let isValidText = isValidName(with: photoTitle)
+
+        guard !isValidText else {
+            return
+        }
+
+        searchPhotos(ImageName: photoTitle, isPrefetch: true)
     }
 
 }

@@ -12,7 +12,7 @@ import Foundation
 class ImgurViewController: BaseViewController {
 
     struct K {
-        static let lastTenCellsVisible = 10
+        static let maxPhotoHeight: CGFloat = 200
     }
 
     // MARK: - IBOutlets
@@ -22,8 +22,8 @@ class ImgurViewController: BaseViewController {
 
     // MARK: - Properties
 
-    private var photos = [Imgur]()
     private var timer: Timer? = nil
+    private var collectionViewAdapter: ImgurCollectionViewAdapter?
     
     // MARK: - Life cycle
 
@@ -46,12 +46,15 @@ class ImgurViewController: BaseViewController {
 
     func setupCollectionView() {
         collectionView.backgroundColor = .clear
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.prefetchDataSource = self
+
+        guard let presenter = (presenter as? ImgurPresenter) else {
+            return
+        }
+
+        collectionViewAdapter = ImgurCollectionViewAdapter(collectionView: collectionView, onCellTouchListener: presenter, prefetchListener: presenter)
 
         if let layout = collectionView?.collectionViewLayout as? ImageLayout {
-            layout.delegate = self
+            layout.delegate = collectionViewAdapter
         }
     }
 
@@ -77,72 +80,6 @@ class ImgurViewController: BaseViewController {
 
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         (presenter as? ImgurPresenterProtocol)?.dismissKeyboard()
-    }
-
-}
-
-// MARK: - UICollectionViewDataSource
-
-extension ImgurViewController: UICollectionViewDataSource {
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImgurCollectionViewCell", for: indexPath)
-            as? ImgurCollectionViewCell else {
-                return UICollectionViewCell()
-        }
-
-        cell.configureCell(imgur: photos[indexPath.row])
-        return cell
-    }
-
-}
-
-extension ImgurViewController: UICollectionViewDelegate {
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        (presenter as? ImgurPresenterProtocol)?.didSelectItem(image: photos[indexPath.row], view: self)
-    }
-}
-
-// MARK: - UICollectionViewDataSourcePrefetching
-
-extension ImgurViewController: UICollectionViewDataSourcePrefetching {
-
-    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        for indexPath in indexPaths {
-            if  indexPath.item > (photos.count - K.lastTenCellsVisible) {
-                guard let text = searchBar.text, let presenter = (presenter as? ImgurPresenterProtocol) else {
-                    return
-                }
-
-                let isValidText = presenter.isValidName(with: text)
-
-                guard !isValidText else {
-                    return
-                }
-
-                presenter.searchPhotos(ImageName: text, isPrefetch: true)
-                break
-            }
-        }
-    }
-}
-
-// MARK: - ImageLayoutDelegate
-
-extension ImgurViewController: ImageLayoutDelegate {
-
-    func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
-        guard let imageHeight = photos[indexPath.item].images?.first?.height else {
-            return 200
-        }
-
-        return CGFloat(imageHeight)
     }
 
 }
@@ -203,18 +140,22 @@ extension ImgurViewController: ImgurView {
     }
 
     func cleanView() {
-        photos.removeAll()
-        collectionView.reloadData()
-        collectionView.collectionViewLayout.invalidateLayout()
+        collectionViewAdapter?.clear()
         collectionView.setContentOffset(CGPoint(x:0,y:0), animated: false)
         searchBar.text = ""
         (presenter as? ImgurPresenterProtocol)?.dismissKeyboard()
     }
 
     func showPhotos(photosArr: [Imgur]) {
-        photos = photosArr
-        collectionView.reloadData()
-        collectionView.collectionViewLayout.invalidateLayout()
+        collectionViewAdapter?.addData(data: photosArr)
+    }
+
+    func getImageTitle() -> String? {
+        return searchBar.text
+    }
+
+    func getViewController() -> UIViewController {
+        return self
     }
 
     @objc func dismissKeyboard() {

@@ -13,6 +13,7 @@ class ImgurRouteWireFrame {
     func navigateToImageDetails(image: Imgur, from classRef: UIViewController) {
         let ImageDetailView = ImgurFactory.makeDetailViewController()
         ImageDetailView.image = image
+
         guard let sourceNavigationController = classRef.navigationController else {
             classRef.present(ImageDetailView, animated: true, completion: nil)
             return

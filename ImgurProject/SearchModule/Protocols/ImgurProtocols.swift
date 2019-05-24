@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 protocol SearchInteractorResultProtocol {
     //Interactor -> Presenter
     func didFinishFetchingRecentSearchResults(allSearches: [Imgur]?)
@@ -20,8 +19,12 @@ protocol SearchInteractorProtocol {
     var presenter: ImgurPresenter? { get set }
 }
 
-protocol onCellTouchListener : class {
+protocol onCellTouchListener: class {
     func onCellTouch<Cell: UICollectionViewCell>(_ cell: Cell, object: Any)
+}
+
+protocol CollectionViewPrefetchListener: class {
+    func prefetchData()
 }
 
 protocol ImgurWireframeProtocol {

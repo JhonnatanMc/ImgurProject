@@ -6,13 +6,17 @@
 //  Copyright © 2019 Jhonnatan Macias. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class ImageDetailPresenter: BasePresenter {
+
+    // MARK: - Constants
 
     struct K {
         static let title = "Photo"
     }
+
+    // MARK: - Public Methods
 
     func titleView(image: Imgur) {
         guard let photo = image.images?.first else {
@@ -24,6 +28,8 @@ class ImageDetailPresenter: BasePresenter {
     }
 
 }
+
+ // MARK: - ImgurDetailPresenterProtocol
 
 extension ImageDetailPresenter: ImgurDetailPresenterProtocol {
 
