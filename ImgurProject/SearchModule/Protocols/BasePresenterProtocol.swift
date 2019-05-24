@@ -17,6 +17,7 @@ protocol BasePresenterProtocol {
     func bind(withView view: BaseView)
 
     func unBind()
+
 }
 
 class BasePresenter: NSObject, BasePresenterProtocol {
@@ -29,4 +30,5 @@ class BasePresenter: NSObject, BasePresenterProtocol {
     func unBind() {
         self.view = nil
     }
+
 }
