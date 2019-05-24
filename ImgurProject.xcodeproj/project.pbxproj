@@ -25,7 +25,6 @@
 		3D68B3A02295AEA600216684 /* Imgur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B39F2295AEA600216684 /* Imgur.swift */; };
 		3D68B3A52295C85B00216684 /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B3A42295C85B00216684 /* ImageDetailViewController.swift */; };
 		3D68B3A82295CC0100216684 /* WebServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B3A72295CC0100216684 /* WebServiceManager.swift */; };
-		3D68B3AA2295DDAD00216684 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B3A92295DDAD00216684 /* SearchService.swift */; };
 		3D68B3AC2295E92000216684 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B3AB2295E92000216684 /* Image.swift */; };
 		3D68B3B22296EF2400216684 /* ImgurContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B3B12296EF2400216684 /* ImgurContract.swift */; };
 		3D68B3B82296F33100216684 /* BasePresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B3B72296F33100216684 /* BasePresenterProtocol.swift */; };
@@ -77,7 +76,6 @@
 		3D68B39F2295AEA600216684 /* Imgur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Imgur.swift; sourceTree = "<group>"; };
 		3D68B3A42295C85B00216684 /* ImageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
 		3D68B3A72295CC0100216684 /* WebServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServiceManager.swift; sourceTree = "<group>"; };
-		3D68B3A92295DDAD00216684 /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
 		3D68B3AB2295E92000216684 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		3D68B3B12296EF2400216684 /* ImgurContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgurContract.swift; sourceTree = "<group>"; };
 		3D68B3B72296F33100216684 /* BasePresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePresenterProtocol.swift; sourceTree = "<group>"; };
@@ -220,7 +218,6 @@
 			isa = PBXGroup;
 			children = (
 				3D68B3A72295CC0100216684 /* WebServiceManager.swift */,
-				3D68B3A92295DDAD00216684 /* SearchService.swift */,
 			);
 			path = webServices;
 			sourceTree = "<group>";
@@ -616,7 +613,6 @@
 				3D68B39E2295AE4D00216684 /* Result.swift in Sources */,
 				3D68B3AC2295E92000216684 /* Image.swift in Sources */,
 				3D68B3A02295AEA600216684 /* Imgur.swift in Sources */,
-				3D68B3AA2295DDAD00216684 /* SearchService.swift in Sources */,
 				3D68B3682294981200216684 /* ImgurViewController.swift in Sources */,
 				3D68B3BC2296F41800216684 /* ImgurPresenter.swift in Sources */,
 				3D68B3BA2296F35200216684 /* BaseViewController.swift in Sources */,

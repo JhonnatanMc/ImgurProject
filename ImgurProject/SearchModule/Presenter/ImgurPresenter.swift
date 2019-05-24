@@ -25,7 +25,7 @@ class ImgurPresenter: BasePresenter {
         super.init()
         self.imgurInteractor = imgurInteractor
         self.imgurRouteWireframe = imgurRouteWireframe
-        self.loadSearchPageComponents()
+        self.loadComponents()
     }
 
 }
@@ -36,7 +36,7 @@ extension ImgurPresenter: ImgurPresenterProtocol {
         imgurRouteWireframe?.showImageDetails(image: image, from: view)
     }
 
-    func loadSearchPageComponents() {
+    func loadComponents() {
         imgurInteractor?.presenter = self
     }
 
@@ -70,6 +70,11 @@ extension ImgurPresenter: ImgurPresenterProtocol {
 }
 
 extension ImgurPresenter: SearchInteractorResultProtocol {
+
+    func didFinishFetchingWithError() {
+        (view as? ImgurView)?.hideSpinner()
+        cleanView()
+    }
 
     func didFinishFetchingRecentSearchResults(allSearches: [Imgur]?) {
         guard let AllPhotos = allSearches else {

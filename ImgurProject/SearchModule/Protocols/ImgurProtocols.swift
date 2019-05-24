@@ -12,6 +12,7 @@ import UIKit
 protocol SearchInteractorResultProtocol {
     //Interactor -> Presenter
     func didFinishFetchingRecentSearchResults(allSearches: [Imgur]?)
+    func didFinishFetchingWithError()
 }
 
 protocol SearchInteractorProtocol {

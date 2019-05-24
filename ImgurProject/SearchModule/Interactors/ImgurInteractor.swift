@@ -18,6 +18,8 @@ class ImgurInteractor: SearchInteractorProtocol {
                 if status == 200 {
                     let photosObject = try JSONDecoder().decode(Result.self, from: JSON!)
                     self?.presenter?.didFinishFetchingRecentSearchResults(allSearches: photosObject.data)
+                } else {
+                    self?.presenter?.didFinishFetchingWithError()
                 }
             } catch {
                 self?.presenter?.didFinishFetchingRecentSearchResults(allSearches: nil)
