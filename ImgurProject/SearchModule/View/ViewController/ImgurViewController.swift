@@ -11,6 +11,8 @@ import Foundation
 
 class ImgurViewController: BaseViewController {
 
+    // MARK: - Constants
+
     struct K {
         static let maxPhotoHeight: CGFloat = 200
     }
@@ -141,7 +143,7 @@ extension ImgurViewController: ImgurView {
 
     func cleanView() {
         collectionViewAdapter?.clear()
-        collectionView.setContentOffset(CGPoint(x:0,y:0), animated: false)
+        collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
         searchBar.text = ""
         (presenter as? ImgurPresenterProtocol)?.dismissKeyboard()
     }
