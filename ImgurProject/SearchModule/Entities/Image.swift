@@ -32,7 +32,7 @@ struct Image {
             title = try container.decodeIfPresent(String.self, forKey: .title)
 
             if let heightImage = try container.decodeIfPresent(Int.self, forKey: .height) {
-                height = heightImage > 450 ? 450 : heightImage
+                height = heightImage > 300 ? 200 : heightImage
             }
 
         } catch let error {

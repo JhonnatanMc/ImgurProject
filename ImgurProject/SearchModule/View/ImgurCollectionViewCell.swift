@@ -11,7 +11,7 @@ import Foundation
 import AlamofireImage
 
 class ImgurCollectionViewCell: UICollectionViewCell {
-    
+
     @IBOutlet weak var pictureImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
 
@@ -26,20 +26,13 @@ class ImgurCollectionViewCell: UICollectionViewCell {
     }
 
     func configureCell(imgur: Imgur) {
-        guard let image = imgur.images?.first else {
+        guard let image = imgur.images?.first, let imageUrl = URL(string: image.link) else {
             return
         }
 
-        titleLabel.text = image.title ?? image.imageDescription ?? imgur.title
-
-        let filter = AspectScaledToFillSizeWithRoundedCornersFilter(
-            size: pictureImageView.frame.size,
-            radius: 4)
+        titleLabel.text = imgur.title ?? image.imageDescription ?? image.title
+        let filter = AspectScaledToFillSizeWithRoundedCornersFilter(size: pictureImageView.frame.size, radius: 4)
         let placeholderImage = UIImage(named: "placeholder")!
-
-        guard let imageUrl = URL(string: image.link) else {
-            return
-        }
 
         pictureImageView.af_setImage(
             withURL: imageUrl,

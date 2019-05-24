@@ -21,9 +21,8 @@ class WebServiceManager {
 
     func requestAPI(textSearch : String, page: String, successCallback : @escaping WebServiceCompletionBlock) -> Void {
         let headers = ["Content-Type": "application/x-www-form-urlencoded", "Accept": "application/json", "Authorization": K.cliendId]
-        
-        Alamofire.request(K.baseUrl + page + "?q=\(textSearch)", method: .get, encoding: URLEncoding.default, headers: headers).validate().responseJSON { response in
 
+        Alamofire.request(K.baseUrl + page + "?q=\(textSearch)", method: .get, encoding: URLEncoding.default, headers: headers).validate().responseJSON { response in
             if response.response?.statusCode == nil {
                 successCallback(nil, 0)
             } else if response.response?.statusCode == 200 && response.data != nil {
