@@ -35,6 +35,7 @@ extension WebServiceManagerProtocol {
         request.allHTTPHeaderFields = BaseUrl.getHeaders()
 
         dataTask = defaultSession.dataTask(with: request, completionHandler: { (data, response, error) in
+            defer { dataTask = nil }
             guard let response = response as? HTTPURLResponse else {
                 return
             }
