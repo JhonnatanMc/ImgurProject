@@ -12,7 +12,7 @@ class ImgurPresenter: BasePresenter {
 
     // MARK: - Properties
 
-    private var currentPage = 0
+    private var currentPage = 1
     private var photos = [Imgur]()
     private var isPrefetch: Bool = false
     var imgurInteractor: ImgurInteractor?
@@ -53,7 +53,12 @@ extension ImgurPresenter: ImgurPresenterProtocol {
         currentPage = isPrefetch ? (currentPage + 1) : currentPage
         let page = String(currentPage)
         self.isPrefetch = isPrefetch
-        (view as? ImgurView)?.displaySpinner()
+
+        guard let view = (view as? ImgurView) else {
+            return
+        }
+
+        view.displaySpinner()
         imgurInteractor?.fetchRecentSearch(ImageName: ImageName, page: page)
     }
 
@@ -62,14 +67,23 @@ extension ImgurPresenter: ImgurPresenterProtocol {
     }
 
     func dismissKeyboard() {
-        (self.view as? ImgurView)?.dismissKeyboard()
+        guard let view = (view as? ImgurView) else {
+            return
+        }
+
+        view.dismissKeyboard()
     }
 
     func cleanView() {
         currentPage = 0
         photos = [Imgur]()
         isPrefetch = false
-        (self.view as? ImgurView)?.cleanView()
+
+        guard let view = (view as? ImgurView) else {
+            return
+        }
+
+        view.cleanView()
     }
 
 }
@@ -79,23 +93,38 @@ extension ImgurPresenter: ImgurPresenterProtocol {
 extension ImgurPresenter: SearchInteractorResultProtocol {
 
     func didFinishFetchingWithError() {
-        (view as? ImgurView)?.hideSpinner()
-        cleanView()
+        DispatchQueue.main.async { [weak self] in
+            guard let view = (self?.view as? ImgurView) else {
+                return
+            }
+
+            view.hideSpinner()
+            self?.cleanView()
+        }
     }
 
     func didFinishFetchingRecentSearchResults(allSearches: [Imgur]?) {
-        guard let AllPhotos = allSearches else {
-            return
-        }
+        DispatchQueue.main.async { [weak self] in
 
-        if isPrefetch {
-            self.photos.append(contentsOf: AllPhotos)
-        } else {
-            photos = AllPhotos
-        }
+            guard let AllPhotos = allSearches, let isPrefetched = self?.isPrefetch,
+                let view = (self?.view as? ImgurView) else {
+                return
+            }
 
-        (view as? ImgurView)?.hideSpinner()
-        (self.view as? ImgurView)?.showPhotos(photosArr: photos)
+            if isPrefetched {
+                self?.photos.append(contentsOf: AllPhotos)
+            } else {
+                self?.photos = AllPhotos
+            }
+
+            view.hideSpinner()
+
+            guard let photos = self?.photos else {
+                return
+            }
+
+            view.showPhotos(photosArr: photos)
+        }
     }
 
 }

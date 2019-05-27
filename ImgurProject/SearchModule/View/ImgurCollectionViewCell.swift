@@ -33,13 +33,15 @@ class ImgurCollectionViewCell: UICollectionViewCell {
         titleLabel.text = imgur.title ?? image.imageDescription ?? image.title
         let filter = AspectScaledToFillSizeWithRoundedCornersFilter(size: pictureImageView.frame.size, radius: 4)
         let placeholderImage = UIImage(named: "placeholder")!
+        DispatchQueue.main.async { [weak self] in
+            self?.pictureImageView.af_setImage(
+                withURL: imageUrl,
+                placeholderImage: placeholderImage,
+                filter: filter,
+                imageTransition: .crossDissolve(0.2)
+            )
+        }
 
-        pictureImageView.af_setImage(
-            withURL: imageUrl,
-            placeholderImage: placeholderImage,
-            filter: filter,
-            imageTransition: .crossDissolve(0.2)
-        )
     }
 
 }

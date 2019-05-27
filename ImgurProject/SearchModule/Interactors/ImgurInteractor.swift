@@ -8,21 +8,26 @@
 
 import Foundation
 
-class ImgurInteractor: SearchInteractorProtocol {
+class ImgurInteractor: SearchInteractorProtocol, WebServiceManagerProtocol {
 
     var presenter: ImgurPresenter?
+    private var callback: ((Data?, String, Int) -> Void )?
 
     func fetchRecentSearch(ImageName: String, page: String) {
-        WebServiceManager.sharedService.requestAPI(textSearch: ImageName, page: page) {  [weak self] (JSON: Data?, status: Int) in
-            do {
-                if status == 200 {
-                    let photosObject = try JSONDecoder().decode(Result.self, from: JSON!)
-                    self?.presenter?.didFinishFetchingRecentSearchResults(allSearches: photosObject.data)
-                } else {
-                    self?.presenter?.didFinishFetchingWithError()
+        DispatchQueue.main.async { [weak self] in
+            self?.getSearchResult(page: page, textSearch: ImageName) { [weak self] (JSON: Data?, message, status) in
+                guard let data = JSON else {
+                    return
                 }
-            } catch {
-                self?.presenter?.didFinishFetchingRecentSearchResults(allSearches: nil)
+
+                do {
+                    if status == BaseUrl.statusCode.success.rawValue {
+                        let photosObject = try JSONDecoder().decode(Result.self, from: data)
+                        self?.presenter?.didFinishFetchingRecentSearchResults(allSearches: photosObject.data)
+                    }
+                } catch {
+                    self?.presenter?.didFinishFetchingRecentSearchResults(allSearches: nil)
+                }
             }
         }
     }

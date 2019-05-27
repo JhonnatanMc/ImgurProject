@@ -81,7 +81,11 @@ class ImgurViewController: BaseViewController {
     }
 
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        (presenter as? ImgurPresenterProtocol)?.dismissKeyboard()
+        guard let presenter = self.presenter as? ImgurPresenterProtocol else {
+            return
+        }
+
+        presenter.dismissKeyboard()
     }
 
 }
@@ -93,7 +97,11 @@ extension ImgurViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar .resignFirstResponder()
         searchBar.setShowsCancelButton(false, animated: true)
-        (presenter as? ImgurPresenterProtocol)?.dismissKeyboard()
+        guard let presenter = self.presenter as? ImgurPresenterProtocol else {
+            return
+        }
+
+        presenter.dismissKeyboard()
     }
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -103,11 +111,20 @@ extension ImgurViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         searchBar.setShowsCancelButton(false, animated: true)
-        (presenter as? ImgurPresenterProtocol)?.cleanView()
+
+        guard let presenter = self.presenter as? ImgurPresenterProtocol else {
+            return
+        }
+
+        presenter.cleanView()
     }
 
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        (presenter as? ImgurPresenterProtocol)?.dismissKeyboard()
+        guard let presenter = self.presenter as? ImgurPresenterProtocol else {
+            return
+        }
+
+        presenter.dismissKeyboard()
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

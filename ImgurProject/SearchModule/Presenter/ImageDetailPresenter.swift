@@ -19,12 +19,12 @@ class ImageDetailPresenter: BasePresenter {
     // MARK: - Public Methods
 
     func titleView(image: Imgur) {
-        guard let photo = image.images?.first else {
+        guard let photo = image.images?.first, let view = (view as? ImgurDetailView) else {
             return
         }
 
         let title = image.title ?? photo.title ?? photo.imageDescription ?? K.title
-        (view as? ImgurDetailView)?.showTitle(title: title)
+        view.showTitle(title: title)
     }
 
 }
@@ -42,11 +42,12 @@ extension ImageDetailPresenter: ImgurDetailPresenterProtocol {
     }
 
     func getImage(image: Imgur) {
-        guard let photoDetail = image.images?.first, let imageUrl = URL(string: photoDetail.link) else {
+        guard let photoDetail = image.images?.first, let imageUrl = URL(string: photoDetail.link),
+        let view = (view as? ImgurDetailView) else {
             return
         }
 
-        (view as? ImgurDetailView)?.setPhoto(url: imageUrl)
+        view.setPhoto(url: imageUrl)
     }
 
 }
