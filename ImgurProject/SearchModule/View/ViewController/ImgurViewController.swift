@@ -15,7 +15,7 @@ class ImgurViewController: BaseViewController, ImgurViewControllerProtocol {
 
     struct Constants {
         static let patternImage = UIImage(named: "pattern")
-        static let barTinColor = UIColor(red: 37.0/255.0, green: 59.0/255.0, blue: 86.0/255.0, alpha: 1.0)
+        static let customBarTinColor = UIColor(red: 37.0/255.0, green: 59.0/255.0, blue: 86.0/255.0, alpha: 1.0)
         static let titleView = "Imgur"
         static let cancel = "Cancel"
         static let searchText = "Search your Image"
@@ -58,6 +58,8 @@ class ImgurViewController: BaseViewController, ImgurViewControllerProtocol {
 
         collectionViewAdapter = ImgurCollectionViewAdapter(collectionView: collectionView, onCellTouchListener: presenter, prefetchListener: presenter)
 
+        // why do you use upCasting instead use the specific type?
+        // A: I setup it for Interfaz builder,  so I need get it again for set its delegate
         if let layout = collectionView?.collectionViewLayout as? ImageLayout {
             layout.delegate = collectionViewAdapter
         }
@@ -74,7 +76,7 @@ class ImgurViewController: BaseViewController, ImgurViewControllerProtocol {
     func setupSearchBar() {
         searchBar.delegate = self
         searchBar.returnKeyType = .done
-        searchBar.barTintColor = Constants.barTinColor
+        searchBar.barTintColor = Constants.customBarTinColor
 
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = Constants.cancel
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes([NSAttributedString.Key(rawValue: NSAttributedString.Key.foregroundColor.rawValue):  Constants.barButtonColor], for: .normal)
