@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ImgurCollectionViewAdapter: CollectionViewAdapter<Imgur> {
+class ImgurCollectionViewAdapter: CollectionViewAdapter {
 
     struct K {
         static let lastTenVisibleCells = 10

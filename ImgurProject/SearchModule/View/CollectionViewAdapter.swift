@@ -9,18 +9,18 @@
 import UIKit
 import Foundation
 
-class CollectionViewAdapter<T: Any>: NSObject, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
+class CollectionViewAdapter: NSObject, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
 
     // MARK: - Properties
 
     weak var collectionView: UICollectionView?
     weak var onCellTouchListener: onCellTouchListener?
     weak var prefetchListener: CollectionViewPrefetchListener?
-    var data: [T]
+    var data: [Imgur]
 
     // MARK: - Initializers
 
-    init(collectionView: UICollectionView, data: [T] = [],
+    init(collectionView: UICollectionView, data: [Imgur] = [],
          onCellTouchListener: onCellTouchListener? = nil, prefetchListener: CollectionViewPrefetchListener? = nil) {
         self.data = data
         self.collectionView = collectionView
@@ -32,7 +32,7 @@ class CollectionViewAdapter<T: Any>: NSObject, UICollectionViewDelegate, UIColle
 
     // MARK: - Public Methods
 
-    func addData(data: [T]) {
+    func addData(data: [Imgur]) {
         self.data = data
         notifyDataSetHasChanged()
     }
