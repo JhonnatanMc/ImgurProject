@@ -24,7 +24,7 @@ extension WebServiceManagerProtocol {
             return
         }
 
-        urlComponents.query = "q=\(textSearch)"
+        urlComponents.query = "q=\(textSearch)&q_type=jpg&q_size_px=400"
 
         guard let url = urlComponents.url else {
             return

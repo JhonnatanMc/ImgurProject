@@ -27,8 +27,8 @@ class ImgurPresenter: BasePresenter {
         self.loadComponents()
     }
 
-    override func unBind() {
-        super.unBind()
+    override func unSet() {
+        super.unSet()
     }
 
 }
@@ -45,8 +45,8 @@ extension ImgurPresenter: ImgurPresenterProtocol {
         imgurInteractor?.presenter = self
     }
 
-    func bind(withView view: ImgurView) {
-        super.bind(withView: view)
+    func set(withView view: ImgurView) {
+        super.set(withView: view)
     }
 
     func searchPhotos(ImageName: String, isPrefetch: Bool) {
@@ -148,12 +148,6 @@ extension ImgurPresenter: CollectionViewPrefetchListener {
 
     func prefetchData() {
         guard let view = (view as? ImgurView), let photoTitle = view.getImageTitle() else {
-            return
-        }
-
-        let isValidText = isValidName(with: photoTitle)
-
-        guard !isValidText else {
             return
         }
 

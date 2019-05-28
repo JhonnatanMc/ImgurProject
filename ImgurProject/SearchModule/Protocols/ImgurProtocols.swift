@@ -29,5 +29,13 @@ protocol CollectionViewPrefetchListener: class {
 
 protocol ImgurWireframeProtocol {
     //Presenter -> Wireframe
-    func showImageDetails(image: Imgur, from classRef: UIViewController)
+    func showImageDetails(image: Imgur, from viewController: UIViewController)
+}
+
+protocol ImgurViewControllerProtocol: class {
+    var presenter: ImgurPresenter? { set get }
+}
+
+protocol ImageDetailViewControllerProtocol: class {
+    var presenter: ImageDetailPresenter? { set get }
 }

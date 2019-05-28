@@ -13,7 +13,7 @@ class ImageLayout: UICollectionViewLayout {
     // MARK: - Constants
 
     struct K {
-        static let numberOfColumns = 3
+        static let numberOfColumns = 2
         static let cellPadding: CGFloat = 6
     }
 

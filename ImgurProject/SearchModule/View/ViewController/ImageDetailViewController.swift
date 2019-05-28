@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class ImageDetailViewController: BaseViewController {
+class ImageDetailViewController: BaseViewController, ImageDetailViewControllerProtocol {
 
     // MARK: - IBOutlets
 
@@ -18,17 +18,18 @@ class ImageDetailViewController: BaseViewController {
     // MARK: - Properties
 
     var image: Imgur?
+    var presenter: ImageDetailPresenter?
 
     // MARK: - Life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        guard let presenter = (presenter as? ImgurDetailPresenterProtocol), let imageDetail = image else {
+        guard let presenter = presenter, let imageDetail = image else {
             return
         }
 
-        presenter.bind(withView: self)
+        presenter.set(withView: self)
         presenter.setTitle(image: imageDetail)
         presenter.getImage(image: imageDetail)
     }

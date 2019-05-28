@@ -27,6 +27,7 @@ class ImgurCollectionViewCell: UICollectionViewCell {
 
     func configureCell(imgur: Imgur) {
         guard let image = imgur.images?.first, let imageUrl = URL(string: image.link) else {
+            assert(imgur.images != nil, "Image is nil")
             return
         }
 

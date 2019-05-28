@@ -33,8 +33,8 @@ class ImageDetailPresenter: BasePresenter {
 
 extension ImageDetailPresenter: ImgurDetailPresenterProtocol {
 
-    func bind(withView view: ImgurDetailView) {
-        super.bind(withView: view)
+    func set(withView view: ImgurDetailView) {
+        super.set(withView: view)
     }
 
     func setTitle(image: Imgur) {

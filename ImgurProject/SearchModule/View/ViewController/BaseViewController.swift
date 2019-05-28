@@ -10,7 +10,6 @@ import UIKit
 
 class BaseViewController: UIViewController, BaseView {
 
-    var presenter: BasePresenterProtocol?
     private var spinner: UIActivityIndicatorView!
     private var spinnerView: UIView!
 
@@ -25,7 +24,7 @@ class BaseViewController: UIViewController, BaseView {
     }
 
     deinit {
-        presenter?.unBind()
+//        presenter?.unSet()
     }
 
     override func viewDidLoad() {

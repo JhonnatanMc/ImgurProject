@@ -14,6 +14,10 @@ class ImgurInteractor: SearchInteractorProtocol, WebServiceManagerProtocol {
     private var callback: ((Data?, String, Int) -> Void )?
 
     func fetchRecentSearch(ImageName: String, page: String) {
+        guard !isValidName(with: ImageName) else {
+            return
+        }
+
         DispatchQueue.main.async { [weak self] in
             self?.getSearchResult(page: page, textSearch: ImageName) { [weak self] (JSON: Data?, message, status) in
                 guard let data = JSON else {
@@ -30,5 +34,9 @@ class ImgurInteractor: SearchInteractorProtocol, WebServiceManagerProtocol {
                 }
             }
         }
+    }
+
+    func isValidName(with imageTitle: String) -> Bool {
+        return imageTitle.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty
     }
 }

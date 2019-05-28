@@ -39,30 +39,39 @@
                                             <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ncq-dU-0aN">
+                                                <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="ncq-dU-0aN">
                                                     <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="n7r-ll-1gl">
-                                                            <rect key="frame" x="0.0" y="0.0" width="180" height="132"/>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="n7r-ll-1gl">
+                                                            <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
                                                         </imageView>
+                                                        <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LdS-Oe-GPI">
+                                                            <rect key="frame" x="0.0" y="136" width="180" height="44"/>
+                                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="44" id="zMW-Wd-f2b"/>
+                                                            </constraints>
+                                                        </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b15-TJ-sc4">
                                                             <rect key="frame" x="4" y="136" width="172" height="40"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="40" id="zzG-5E-bBH"/>
                                                             </constraints>
-                                                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
-                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.1450980392" green="0.23137254900000001" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstItem="n7r-ll-1gl" firstAttribute="leading" secondItem="ncq-dU-0aN" secondAttribute="leading" id="0E0-hu-FgP"/>
+                                                        <constraint firstAttribute="bottom" secondItem="n7r-ll-1gl" secondAttribute="bottom" id="Bva-i6-Jdk"/>
                                                         <constraint firstAttribute="trailing" secondItem="b15-TJ-sc4" secondAttribute="trailing" constant="4" id="Jhq-Bp-PAb"/>
+                                                        <constraint firstItem="LdS-Oe-GPI" firstAttribute="leading" secondItem="ncq-dU-0aN" secondAttribute="leading" id="S9e-uw-iFO"/>
                                                         <constraint firstItem="b15-TJ-sc4" firstAttribute="leading" secondItem="ncq-dU-0aN" secondAttribute="leading" constant="4" id="TPu-ZY-Zbl"/>
                                                         <constraint firstItem="n7r-ll-1gl" firstAttribute="top" secondItem="ncq-dU-0aN" secondAttribute="top" id="br5-it-C1i"/>
+                                                        <constraint firstAttribute="bottom" secondItem="LdS-Oe-GPI" secondAttribute="bottom" id="d4K-y2-09G"/>
                                                         <constraint firstAttribute="bottom" secondItem="b15-TJ-sc4" secondAttribute="bottom" constant="4" id="fc2-X7-3Yt"/>
-                                                        <constraint firstItem="b15-TJ-sc4" firstAttribute="top" secondItem="n7r-ll-1gl" secondAttribute="bottom" constant="4" id="uNN-bn-DGx"/>
+                                                        <constraint firstAttribute="trailing" secondItem="LdS-Oe-GPI" secondAttribute="trailing" id="gY0-EC-8k1"/>
                                                         <constraint firstAttribute="trailing" secondItem="n7r-ll-1gl" secondAttribute="trailing" id="xin-KZ-vTd"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>

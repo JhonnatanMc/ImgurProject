@@ -9,12 +9,13 @@
 import UIKit
 import Foundation
 
-class ImgurViewController: BaseViewController {
+class ImgurViewController: BaseViewController, ImgurViewControllerProtocol {
 
     // MARK: - Constants
 
-    struct K {
-        static let maxPhotoHeight: CGFloat = 200
+    struct Constants {
+        static let patternImage = UIImage(named: "pattern")
+        static let barTinColor = UIColor(red: 37.0/255.0, green: 59.0/255.0, blue: 86.0/255.0, alpha: 1.0)
     }
 
     // MARK: - IBOutlets
@@ -26,7 +27,8 @@ class ImgurViewController: BaseViewController {
 
     private var timer: Timer? = nil
     private var collectionViewAdapter: ImgurCollectionViewAdapter?
-    
+    var presenter: ImgurPresenter?
+
     // MARK: - Life cycle
 
     override func viewDidLoad() {
@@ -37,11 +39,8 @@ class ImgurViewController: BaseViewController {
         setupSearchBar()
         setupView()
 
-        guard let presenter = presenter as? ImgurPresenterProtocol else {
-            return
-        }
+        presenter?.set(withView: self)
 
-        presenter.bind(withView: self)
     }
 
     // MARK: Public Methods
@@ -49,7 +48,7 @@ class ImgurViewController: BaseViewController {
     func setupCollectionView() {
         collectionView.backgroundColor = .clear
 
-        guard let presenter = (presenter as? ImgurPresenter) else {
+        guard let presenter = presenter else {
             return
         }
 
@@ -61,7 +60,7 @@ class ImgurViewController: BaseViewController {
     }
 
     func setupView() {
-        guard let patternImage = UIImage(named: "pattern") else {
+        guard let patternImage = Constants.patternImage else {
             return
         }
 
@@ -71,7 +70,7 @@ class ImgurViewController: BaseViewController {
     func setupSearchBar() {
         searchBar.delegate = self
         searchBar.returnKeyType = .done
-        searchBar.barTintColor = UIColor(red: 37.0/255.0, green: 59.0/255.0, blue: 86.0/255.0, alpha: 1.0)
+        searchBar.barTintColor = Constants.barTinColor
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = "Cancel"
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes([NSAttributedString.Key(rawValue: NSAttributedString.Key.foregroundColor.rawValue): UIColor.white], for: .normal)
 
@@ -81,7 +80,7 @@ class ImgurViewController: BaseViewController {
     }
 
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        guard let presenter = self.presenter as? ImgurPresenterProtocol else {
+        guard let presenter = presenter else {
             return
         }
 
@@ -97,7 +96,7 @@ extension ImgurViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar .resignFirstResponder()
         searchBar.setShowsCancelButton(false, animated: true)
-        guard let presenter = self.presenter as? ImgurPresenterProtocol else {
+        guard let presenter = presenter else {
             return
         }
 
@@ -112,7 +111,7 @@ extension ImgurViewController: UISearchBarDelegate {
         searchBar.resignFirstResponder()
         searchBar.setShowsCancelButton(false, animated: true)
 
-        guard let presenter = self.presenter as? ImgurPresenterProtocol else {
+        guard let presenter = presenter else {
             return
         }
 
@@ -120,7 +119,7 @@ extension ImgurViewController: UISearchBarDelegate {
     }
 
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        guard let presenter = self.presenter as? ImgurPresenterProtocol else {
+        guard let presenter = presenter else {
             return
         }
 
@@ -128,7 +127,7 @@ extension ImgurViewController: UISearchBarDelegate {
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard let presenter = self.presenter as? ImgurPresenterProtocol else {
+        guard let presenter = presenter else {
             return
         }
 
@@ -162,7 +161,7 @@ extension ImgurViewController: ImgurView {
         collectionViewAdapter?.clear()
         collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
         searchBar.text = ""
-        (presenter as? ImgurPresenterProtocol)?.dismissKeyboard()
+        presenter?.dismissKeyboard()
     }
 
     func showPhotos(photosArr: [Imgur]) {

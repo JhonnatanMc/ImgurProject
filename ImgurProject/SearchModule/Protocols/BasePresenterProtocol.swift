@@ -14,9 +14,9 @@ protocol BasePresenterProtocol {
 
     var view: BaseView? { get set }
 
-    func bind(withView view: BaseView)
+    func set(withView view: BaseView)
 
-    func unBind()
+    func unSet()
 
 }
 
@@ -24,11 +24,11 @@ class BasePresenter: NSObject, BasePresenterProtocol {
 
     weak var view: BaseView?
 
-    func bind(withView view: BaseView) {
+    func set(withView view: BaseView) {
         self.view = view
     }
 
-    func unBind() {
+    func unSet() {
         self.view = nil
     }
 

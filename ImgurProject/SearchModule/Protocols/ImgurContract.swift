@@ -29,10 +29,6 @@ protocol ImgurPresenterProtocol: BasePresenterProtocol {
 
     var imgurInteractor: ImgurInteractor? {get set}
 
-    func bind(withView view: ImgurView)
-
-    func unBind()
-
     func dismissKeyboard()
 
     func isValidName(with imageTitle: String) -> Bool
