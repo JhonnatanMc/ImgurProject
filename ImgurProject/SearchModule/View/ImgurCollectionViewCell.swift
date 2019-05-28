@@ -27,19 +27,22 @@ class ImgurCollectionViewCell: UICollectionViewCell {
 
     func configureCell(imgur: Imgur) {
         guard let image = imgur.images?.first, let imageUrl = URL(string: image.link) else {
+            assert(imgur.images != nil, "Image is nil")
             return
         }
 
         titleLabel.text = imgur.title ?? image.imageDescription ?? image.title
         let filter = AspectScaledToFillSizeWithRoundedCornersFilter(size: pictureImageView.frame.size, radius: 4)
         let placeholderImage = UIImage(named: "placeholder")!
+        DispatchQueue.main.async { [weak self] in
+            self?.pictureImageView.af_setImage(
+                withURL: imageUrl,
+                placeholderImage: placeholderImage,
+                filter: filter,
+                imageTransition: .crossDissolve(0.2)
+            )
+        }
 
-        pictureImageView.af_setImage(
-            withURL: imageUrl,
-            placeholderImage: placeholderImage,
-            filter: filter,
-            imageTransition: .crossDissolve(0.2)
-        )
     }
 
 }

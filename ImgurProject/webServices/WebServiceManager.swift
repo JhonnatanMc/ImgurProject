@@ -9,25 +9,71 @@
 import Alamofire
 import Foundation
 
-class WebServiceManager {
+protocol WebServiceManagerProtocol: class {
+    func getSearchResult(page: String, textSearch: String, callback: @escaping (Data?, String, Int) -> Void) -> Void
+}
 
-    struct K {
+extension WebServiceManagerProtocol {
+
+    func getSearchResult(page: String, textSearch: String, callback: @escaping (Data?, String, Int) -> Void) -> Void {
+        var dataTask: URLSessionDataTask?
+        let defaultSession = URLSession(configuration: .default)
+        dataTask?.cancel()
+
+        guard var urlComponents = URLComponents(string: BaseUrl.requestUrl(page: page)) else {
+            return
+        }
+
+        urlComponents.query = "q=\(textSearch)&q_type=jpg&q_size_px=400"
+
+        guard let url = urlComponents.url else {
+            return
+        }
+
+        var request = URLRequest.init(url: url)
+        request.httpMethod = "GET"
+        request.allHTTPHeaderFields = BaseUrl.getHeaders()
+
+        dataTask = defaultSession.dataTask(with: request, completionHandler: { (data, response, error) in
+            defer { dataTask = nil }
+            guard let response = response as? HTTPURLResponse else {
+                return
+            }
+
+            if response.statusCode == BaseUrl.statusCode.success.rawValue {
+                callback(data, "Success", 200)
+            } else {
+                guard let error = error else {
+                    return
+                }
+
+                callback(nil, "DataTask error \(error.localizedDescription)", response.statusCode)
+            }
+
+        })
+        dataTask?.resume()
+
+    }
+
+}
+
+struct BaseUrl {
+    struct Constants {
         static let cliendId = "Client-ID 126701cd8332f32"
         static let baseUrl = "https://api.imgur.com/3/gallery/search/time/"
+        static let headers = ["Content-Type": "application/x-www-form-urlencoded", "Accept": "application/json", "Authorization": Constants.cliendId]
     }
 
-    static let sharedService = WebServiceManager()
-    typealias WebServiceCompletionBlock = (Data?, Int) -> Void
-
-    func requestAPI(textSearch : String, page: String, successCallback : @escaping WebServiceCompletionBlock) -> Void {
-        let headers = ["Content-Type": "application/x-www-form-urlencoded", "Accept": "application/json", "Authorization": K.cliendId]
-
-        Alamofire.request(K.baseUrl + page + "?q=\(textSearch)", method: .get, encoding: URLEncoding.default, headers: headers).validate().responseJSON { response in
-            if response.response?.statusCode == nil {
-                successCallback(nil, 0)
-            } else if response.response?.statusCode == 200 && response.data != nil {
-                successCallback(response.data!, 200)
-            }
-        }
+    static func requestUrl(page: String) -> String {
+        return Constants.baseUrl + page
     }
+
+    static func getHeaders() -> [String: String] {
+        return Constants.headers
+    }
+
+    enum statusCode: Int {
+        case success = 200
+    }
+
 }

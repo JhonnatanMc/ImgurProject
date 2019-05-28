@@ -18,10 +18,6 @@ protocol ImgurDetailView: BaseView {
 
 protocol ImgurDetailPresenterProtocol: BasePresenterProtocol {
 
-    func bind(withView view: ImgurDetailView)
-
-    func unBind()
-
     func setTitle(image: Imgur)
 
     func getImage(image: Imgur)

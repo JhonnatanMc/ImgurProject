@@ -31,6 +31,7 @@
 		3D68B3B82296F33100216684 /* BasePresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B3B72296F33100216684 /* BasePresenterProtocol.swift */; };
 		3D68B3BA2296F35200216684 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B3B92296F35200216684 /* BaseViewController.swift */; };
 		3D68B3BC2296F41800216684 /* ImgurPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D68B3BB2296F41800216684 /* ImgurPresenter.swift */; };
+		3D90B7E3229DD41A0075242B /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D90B7E2229DD41A0075242B /* SpinnerView.swift */; };
 		3DFEDA1D22984F5200DC1F26 /* ImageDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DFEDA1C22984F5200DC1F26 /* ImageDetailPresenter.swift */; };
 		3DFEDA1F22984FBB00DC1F26 /* ImgurDetailContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DFEDA1E22984FBB00DC1F26 /* ImgurDetailContract.swift */; };
 		3DFEDA2122985AC500DC1F26 /* CollectionViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DFEDA2022985AC500DC1F26 /* CollectionViewAdapter.swift */; };
@@ -87,6 +88,7 @@
 		3D68B3B72296F33100216684 /* BasePresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePresenterProtocol.swift; sourceTree = "<group>"; };
 		3D68B3B92296F35200216684 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		3D68B3BB2296F41800216684 /* ImgurPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgurPresenter.swift; sourceTree = "<group>"; };
+		3D90B7E2229DD41A0075242B /* SpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
 		3DFEDA1C22984F5200DC1F26 /* ImageDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailPresenter.swift; sourceTree = "<group>"; };
 		3DFEDA1E22984FBB00DC1F26 /* ImgurDetailContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgurDetailContract.swift; sourceTree = "<group>"; };
 		3DFEDA2022985AC500DC1F26 /* CollectionViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewAdapter.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				3D68B3932294AA2700216684 /* ImgurCollectionViewCell.swift */,
 				3DFEDA2022985AC500DC1F26 /* CollectionViewAdapter.swift */,
 				3DFEDA2222985E3E00DC1F26 /* ImgurCollectionViewAdapter.swift */,
+				3D90B7E2229DD41A0075242B /* SpinnerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -627,6 +630,7 @@
 			files = (
 				3D68B39E2295AE4D00216684 /* Result.swift in Sources */,
 				3DFEDA1F22984FBB00DC1F26 /* ImgurDetailContract.swift in Sources */,
+				3D90B7E3229DD41A0075242B /* SpinnerView.swift in Sources */,
 				3DFEDA2322985E3E00DC1F26 /* ImgurCollectionViewAdapter.swift in Sources */,
 				3D68B3AC2295E92000216684 /* Image.swift in Sources */,
 				3D68B3A02295AEA600216684 /* Imgur.swift in Sources */,

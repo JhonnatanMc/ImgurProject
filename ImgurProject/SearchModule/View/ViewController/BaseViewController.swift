@@ -10,76 +10,55 @@ import UIKit
 
 class BaseViewController: UIViewController, BaseView {
 
-    var presenter: BasePresenterProtocol?
-    private var spinner: UIActivityIndicatorView!
-    private var spinnerView: UIView!
+    // MARK: - Constants
 
-     var spinnerCount : Int = 0 {
-        didSet {
-            if spinnerCount > 0 {
-                showLoadingSpinner()
-            } else {
-                hideLoadingSpinner()
-            }
-        }
+    struct Constants {
+        static let navigationBarColor = UIColor.white
+        static let barTinColor = UIColor(red: 37.0/255.0, green: 59.0/255.0, blue: 86.0/255.0, alpha: 1.0)
     }
 
-    deinit {
-        presenter?.unBind()
-    }
+    // MARK: - Properties
+
+    private var spinnerView: SpinnerView!
+
+     // MARK: - Initializers
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        addSpinner()
+    }
+
+    // MARK: - Public Methods
+
+    func addSpinner() {
+        spinnerView?.removeFromSuperview()
+        spinnerView = SpinnerView()
+        spinnerView.isHidden = true
+        spinnerView.translatesAutoresizingMaskIntoConstraints = false
+        spinnerView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        view.addSubview(spinnerView)
+
+        spinnerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+        spinnerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+        spinnerView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: 0).isActive = true
     }
 
     func setStylesforNavigationBar(_ title: String){
         navigationItem.title = title
 
-        navigationController?.navigationBar.tintColor = UIColor.white
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        navigationController?.navigationBar.barTintColor = UIColor(red: 37.0/255.0, green: 59.0/255.0, blue: 86.0/255.0, alpha: 1.0)
+        navigationController?.navigationBar.tintColor = Constants.navigationBarColor
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: Constants.navigationBarColor]
+        navigationController?.navigationBar.barTintColor = Constants.barTinColor
     }
 
     func showLoadingSpinner() {
-        spinnerView?.removeFromSuperview()
-        spinner?.removeFromSuperview()
-
-        spinnerView = UIView()
-        spinnerView.translatesAutoresizingMaskIntoConstraints = false
-        spinnerView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        spinner = UIActivityIndicatorView()
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-        spinner.color = UIColor.white
-        spinner.startAnimating()
-        view.addSubview(spinnerView)
-        spinnerView?.addSubview(spinner)
-
-        spinnerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
-        spinnerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
-        spinnerView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: 0).isActive = true
-        spinner.centerXAnchor.constraint(equalTo: spinnerView.centerXAnchor, constant: 0).isActive = true
-        spinner.centerYAnchor.constraint(equalTo: spinnerView.centerYAnchor, constant: 0).isActive = true
-        spinner.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        spinner.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        spinnerView.isHidden = false
+        spinnerView.showLoadingSpinner()
     }
 
     func hideLoadingSpinner() {
-        spinner?.stopAnimating()
-        spinnerView?.removeFromSuperview()
-        spinner?.removeFromSuperview()
-        spinnerView = nil
-        spinner = nil
-    }
-
-    internal func addSpinner(){
-        spinnerCount += 1
-    }
-
-    internal func removeSpinner(){
-        spinnerCount -= 1
-        if spinnerCount < 0{
-            spinnerCount = 0
-        }
+        spinnerView.isHidden = true
+        spinnerView.hideLoadingSpinner()
     }
 
 }

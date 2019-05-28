@@ -9,12 +9,19 @@
 import UIKit
 import Foundation
 
-class ImgurViewController: BaseViewController {
+class ImgurViewController: BaseViewController, ImgurViewControllerProtocol {
 
     // MARK: - Constants
 
-    struct K {
-        static let maxPhotoHeight: CGFloat = 200
+    struct Constants {
+        static let patternImage = UIImage(named: "pattern")
+        static let customBarTinColor = UIColor(red: 37.0/255.0, green: 59.0/255.0, blue: 86.0/255.0, alpha: 1.0)
+        static let titleView = "Imgur"
+        static let cancel = "Cancel"
+        static let searchText = "Search your Image"
+        static let fontSize = UIFont.systemFont(ofSize: 14)
+        static let foregroundColor = UIColor.gray
+        static let barButtonColor = UIColor.white
     }
 
     // MARK: - IBOutlets
@@ -26,22 +33,18 @@ class ImgurViewController: BaseViewController {
 
     private var timer: Timer? = nil
     private var collectionViewAdapter: ImgurCollectionViewAdapter?
-    
+    var presenter: ImgurPresenter?
+
     // MARK: - Life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter = ImgurFactory.makeImgurPresenter()
         setupCollectionView()
-        setStylesforNavigationBar("Imgur")
-        setupSearchBar()
+        setStylesforNavigationBar(Constants.titleView)
         setupView()
-
-        guard let presenter = presenter as? ImgurPresenterProtocol else {
-            return
-        }
-
-        presenter.bind(withView: self)
+        presenter?.set(withView: self)
+        setupSearchBar()
     }
 
     // MARK: Public Methods
@@ -49,19 +52,21 @@ class ImgurViewController: BaseViewController {
     func setupCollectionView() {
         collectionView.backgroundColor = .clear
 
-        guard let presenter = (presenter as? ImgurPresenter) else {
+        guard let presenter = presenter else {
             return
         }
 
         collectionViewAdapter = ImgurCollectionViewAdapter(collectionView: collectionView, onCellTouchListener: presenter, prefetchListener: presenter)
 
+        // why do you use upCasting instead use the specific type?
+        // A: I setup it for Interfaz builder,  so I need get it again for set its delegate
         if let layout = collectionView?.collectionViewLayout as? ImageLayout {
             layout.delegate = collectionViewAdapter
         }
     }
 
     func setupView() {
-        guard let patternImage = UIImage(named: "pattern") else {
+        guard let patternImage = Constants.patternImage else {
             return
         }
 
@@ -71,17 +76,22 @@ class ImgurViewController: BaseViewController {
     func setupSearchBar() {
         searchBar.delegate = self
         searchBar.returnKeyType = .done
-        searchBar.barTintColor = UIColor(red: 37.0/255.0, green: 59.0/255.0, blue: 86.0/255.0, alpha: 1.0)
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = "Cancel"
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes([NSAttributedString.Key(rawValue: NSAttributedString.Key.foregroundColor.rawValue): UIColor.white], for: .normal)
+        searchBar.barTintColor = Constants.customBarTinColor
 
-        let placeholderAttributes: [NSAttributedString.Key : AnyObject] = [NSAttributedString.Key.foregroundColor: UIColor.gray, NSAttributedString.Key.font:  UIFont.systemFont(ofSize: 14)]
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = Constants.cancel
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes([NSAttributedString.Key(rawValue: NSAttributedString.Key.foregroundColor.rawValue):  Constants.barButtonColor], for: .normal)
+
+        let placeholderAttributes: [NSAttributedString.Key : AnyObject] = [NSAttributedString.Key.foregroundColor: Constants.foregroundColor, NSAttributedString.Key.font:  Constants.fontSize]
         let textFieldPlaceHolder = searchBar.value(forKey: "searchField") as? UITextField
-        textFieldPlaceHolder?.attributedPlaceholder = NSAttributedString(string: "Search your Image", attributes: placeholderAttributes)
+        textFieldPlaceHolder?.attributedPlaceholder = NSAttributedString(string: Constants.searchText, attributes: placeholderAttributes)
     }
 
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        (presenter as? ImgurPresenterProtocol)?.dismissKeyboard()
+        guard let presenter = presenter else {
+            return
+        }
+
+        presenter.dismissKeyboard()
     }
 
 }
@@ -93,7 +103,11 @@ extension ImgurViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar .resignFirstResponder()
         searchBar.setShowsCancelButton(false, animated: true)
-        (presenter as? ImgurPresenterProtocol)?.dismissKeyboard()
+        guard let presenter = presenter else {
+            return
+        }
+
+        presenter.dismissKeyboard()
     }
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -103,15 +117,24 @@ extension ImgurViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         searchBar.setShowsCancelButton(false, animated: true)
-        (presenter as? ImgurPresenterProtocol)?.cleanView()
+
+        guard let presenter = presenter else {
+            return
+        }
+
+        presenter.cleanView()
     }
 
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        (presenter as? ImgurPresenterProtocol)?.dismissKeyboard()
+        guard let presenter = presenter else {
+            return
+        }
+
+        presenter.dismissKeyboard()
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard let presenter = self.presenter as? ImgurPresenterProtocol else {
+        guard let presenter = presenter else {
             return
         }
 
@@ -145,7 +168,7 @@ extension ImgurViewController: ImgurView {
         collectionViewAdapter?.clear()
         collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
         searchBar.text = ""
-        (presenter as? ImgurPresenterProtocol)?.dismissKeyboard()
+        presenter?.dismissKeyboard()
     }
 
     func showPhotos(photosArr: [Imgur]) {
