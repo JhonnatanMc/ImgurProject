@@ -16,6 +16,12 @@ class ImgurViewController: BaseViewController, ImgurViewControllerProtocol {
     struct Constants {
         static let patternImage = UIImage(named: "pattern")
         static let barTinColor = UIColor(red: 37.0/255.0, green: 59.0/255.0, blue: 86.0/255.0, alpha: 1.0)
+        static let titleView = "Imgur"
+        static let cancel = "Cancel"
+        static let searchText = "Search your Image"
+        static let fontSize = UIFont.systemFont(ofSize: 14)
+        static let foregroundColor = UIColor.gray
+        static let barButtonColor = UIColor.white
     }
 
     // MARK: - IBOutlets
@@ -35,12 +41,10 @@ class ImgurViewController: BaseViewController, ImgurViewControllerProtocol {
         super.viewDidLoad()
         presenter = ImgurFactory.makeImgurPresenter()
         setupCollectionView()
-        setStylesforNavigationBar("Imgur")
-        setupSearchBar()
+        setStylesforNavigationBar(Constants.titleView)
         setupView()
-
         presenter?.set(withView: self)
-
+        setupSearchBar()
     }
 
     // MARK: Public Methods
@@ -71,12 +75,13 @@ class ImgurViewController: BaseViewController, ImgurViewControllerProtocol {
         searchBar.delegate = self
         searchBar.returnKeyType = .done
         searchBar.barTintColor = Constants.barTinColor
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = "Cancel"
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes([NSAttributedString.Key(rawValue: NSAttributedString.Key.foregroundColor.rawValue): UIColor.white], for: .normal)
 
-        let placeholderAttributes: [NSAttributedString.Key : AnyObject] = [NSAttributedString.Key.foregroundColor: UIColor.gray, NSAttributedString.Key.font:  UIFont.systemFont(ofSize: 14)]
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = Constants.cancel
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes([NSAttributedString.Key(rawValue: NSAttributedString.Key.foregroundColor.rawValue):  Constants.barButtonColor], for: .normal)
+
+        let placeholderAttributes: [NSAttributedString.Key : AnyObject] = [NSAttributedString.Key.foregroundColor: Constants.foregroundColor, NSAttributedString.Key.font:  Constants.fontSize]
         let textFieldPlaceHolder = searchBar.value(forKey: "searchField") as? UITextField
-        textFieldPlaceHolder?.attributedPlaceholder = NSAttributedString(string: "Search your Image", attributes: placeholderAttributes)
+        textFieldPlaceHolder?.attributedPlaceholder = NSAttributedString(string: Constants.searchText, attributes: placeholderAttributes)
     }
 
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {

@@ -10,22 +10,7 @@ import UIKit
 
 class BaseViewController: UIViewController, BaseView {
 
-    private var spinner: UIActivityIndicatorView!
-    private var spinnerView: UIView!
-
-     var spinnerCount : Int = 0 {
-        didSet {
-            if spinnerCount > 0 {
-                showLoadingSpinner()
-            } else {
-                hideLoadingSpinner()
-            }
-        }
-    }
-
-    deinit {
-//        presenter?.unSet()
-    }
+    private var spinnerView: SpinnerView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,44 +26,20 @@ class BaseViewController: UIViewController, BaseView {
 
     func showLoadingSpinner() {
         spinnerView?.removeFromSuperview()
-        spinner?.removeFromSuperview()
-
-        spinnerView = UIView()
+        spinnerView = SpinnerView()
         spinnerView.translatesAutoresizingMaskIntoConstraints = false
         spinnerView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        spinner = UIActivityIndicatorView()
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-        spinner.color = UIColor.white
-        spinner.startAnimating()
         view.addSubview(spinnerView)
-        spinnerView?.addSubview(spinner)
 
         spinnerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
         spinnerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
         spinnerView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: 0).isActive = true
-        spinner.centerXAnchor.constraint(equalTo: spinnerView.centerXAnchor, constant: 0).isActive = true
-        spinner.centerYAnchor.constraint(equalTo: spinnerView.centerYAnchor, constant: 0).isActive = true
-        spinner.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        spinner.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        spinnerView.showLoadingSpinner()
     }
 
     func hideLoadingSpinner() {
-        spinner?.stopAnimating()
         spinnerView?.removeFromSuperview()
-        spinner?.removeFromSuperview()
         spinnerView = nil
-        spinner = nil
-    }
-
-    internal func addSpinner(){
-        spinnerCount += 1
-    }
-
-    internal func removeSpinner(){
-        spinnerCount -= 1
-        if spinnerCount < 0{
-            spinnerCount = 0
-        }
     }
 
 }
