@@ -19,9 +19,22 @@ class ImgurProjectTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testWireFrame() {
+        // ImgurViewController
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "ImgurViewController")  as? ImgurViewController
+//        viewController?.presenter = ImgurPresenter(imgurInteractor: <#ImgurInteractor#>)
+        XCTAssertNotNil(viewController)
+//        XCTAssertNotNil(viewController?.presenter)
+
+    }
+
+    func testDetailView() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let imageDetailView = storyboard.instantiateViewController(withIdentifier: "ImageDetailViewController") as! ImageDetailViewController
+        imageDetailView.presenter = ImageDetailPresenter()
+        XCTAssertNotNil(imageDetailView)
+        XCTAssertNotNil(imageDetailView.presenter)
     }
 
     func testPerformanceExample() {
