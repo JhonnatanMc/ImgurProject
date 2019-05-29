@@ -32,7 +32,7 @@ class ImgurViewController: BaseViewController, ImgurViewControllerProtocol {
     // MARK: - Properties
 
     private var timer: Timer? = nil
-    private var collectionViewAdapter: ImgurCollectionViewAdapter?
+    var collectionViewAdapter: ImgurCollectionViewAdapter?
     var presenter: ImgurPresenter?
 
     // MARK: - Life cycle

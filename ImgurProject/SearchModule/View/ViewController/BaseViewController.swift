@@ -52,13 +52,13 @@ class BaseViewController: UIViewController, BaseView {
     }
 
     func showLoadingSpinner() {
-        spinnerView.isHidden = false
-        spinnerView.showLoadingSpinner()
+        spinnerView?.isHidden = false
+        spinnerView?.showLoadingSpinner()
     }
 
     func hideLoadingSpinner() {
-        spinnerView.isHidden = true
-        spinnerView.hideLoadingSpinner()
+        spinnerView?.isHidden = true
+        spinnerView?.hideLoadingSpinner()
     }
 
 }
