@@ -19,6 +19,7 @@ class ImgurInteractorTest:  XCTestCase {
     }
 
     func testFetchRecentSearch() {
+        testInit()
         XCTAssertNotNil(interactor)
         interactor.fetchRecentSearch(ImageName: "", page: "1")
 
