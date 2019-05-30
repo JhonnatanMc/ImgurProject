@@ -68,6 +68,8 @@ class ImgurPresenterTest: XCTestCase {
     func testValidView() {
         presenter = makePresenter()
         view = imgurViewController(presenter: presenter)
+        view.beginAppearanceTransition(true, animated: false)
+        view.endAppearanceTransition()
         presenter.set(withView: view)
         XCTAssertNotNil(view)
     }
