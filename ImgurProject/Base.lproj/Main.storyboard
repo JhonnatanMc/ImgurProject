@@ -13,7 +13,7 @@
         <!--Imgur View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ImgurViewController" customModule="ImgurProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ImgurViewController" id="BYZ-38-t0r" customClass="ImgurViewController" customModule="ImgurProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -130,6 +130,9 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pVq-1j-h1f">
                                 <rect key="frame" x="37.5" y="76.5" width="300" height="534"/>
+                                <accessibility key="accessibilityConfiguration" identifier="imageView">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="pVq-1j-h1f" secondAttribute="height" multiplier="50:89" id="9pp-Df-ccv"/>
                                 </constraints>

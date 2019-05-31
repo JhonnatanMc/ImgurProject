@@ -22,6 +22,7 @@ class ImgurViewController: BaseViewController, ImgurViewControllerProtocol {
         static let fontSize = UIFont.systemFont(ofSize: 14)
         static let foregroundColor = UIColor.gray
         static let barButtonColor = UIColor.white
+        static let collectionViewAccessibilityIdentifier = "collectionView"
     }
 
     // MARK: - IBOutlets
@@ -32,7 +33,7 @@ class ImgurViewController: BaseViewController, ImgurViewControllerProtocol {
     // MARK: - Properties
 
     private var timer: Timer? = nil
-    private var collectionViewAdapter: ImgurCollectionViewAdapter?
+    var collectionViewAdapter: ImgurCollectionViewAdapter?
     var presenter: ImgurPresenter?
 
     // MARK: - Life cycle
@@ -51,7 +52,7 @@ class ImgurViewController: BaseViewController, ImgurViewControllerProtocol {
 
     func setupCollectionView() {
         collectionView.backgroundColor = .clear
-
+        collectionView.accessibilityIdentifier = Constants.collectionViewAccessibilityIdentifier
         guard let presenter = presenter else {
             return
         }

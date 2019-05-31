@@ -11,7 +11,6 @@ import Foundation
 class ImgurInteractor: SearchInteractorProtocol, WebServiceManagerProtocol {
 
     var presenter: ImgurPresenter?
-    private var callback: ((Data?, String, Int) -> Void )?
 
     func fetchRecentSearch(ImageName: String, page: String) {
         guard !isValidName(with: ImageName) else {
