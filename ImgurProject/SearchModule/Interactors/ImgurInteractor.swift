@@ -12,27 +12,34 @@ class ImgurInteractor: SearchInteractorProtocol, WebServiceManagerProtocol {
 
     var presenter: ImgurPresenter?
 
+
     func fetchRecentSearch(ImageName: String, page: String) {
         guard !isValidName(with: ImageName) else {
             return
         }
 
-        DispatchQueue.main.async { [weak self] in
-            self?.getSearchResult(page: page, textSearch: ImageName) { [weak self] (JSON: Data?, message, status) in
-                guard let data = JSON else {
-                    return
-                }
+        let request = RequestWithSessionDelegate()
+        request.requestWithSessionDelegate()
 
-                do {
-                    if status == BaseUrl.statusCode.success.rawValue {
-                        let photosObject = try JSONDecoder().decode(Result.self, from: data)
-                        self?.presenter?.didFinishFetchingRecentSearchResults(allSearches: photosObject.data)
-                    }
-                } catch {
-                    self?.presenter?.didFinishFetchingRecentSearchResults(allSearches: nil)
-                }
-            }
-        }
+//        self.dataTask()
+
+
+//        DispatchQueue.main.async { [weak self] in
+//            self?.getSearchResult(page: page, textSearch: ImageName) { [weak self] (JSON: Data?, message, status) in
+//                guard let data = JSON else {
+//                    return
+//                }
+//
+//                do {
+//                    if status == BaseUrl.statusCode.success.rawValue {
+//                        let photosObject = try JSONDecoder().decode(Result.self, from: data)
+//                        self?.presenter?.didFinishFetchingRecentSearchResults(allSearches: photosObject.data)
+//                    }
+//                } catch {
+//                    self?.presenter?.didFinishFetchingRecentSearchResults(allSearches: nil)
+//                }
+//            }
+//        }
     }
 
     func isValidName(with imageTitle: String) -> Bool {
