@@ -34,8 +34,7 @@ class ImgurViewControllerTest: XCTestCase {
         XCTAssertTrue(image.exists)
         XCTAssertTrue(cancelButton.exists)
         XCTAssertTrue(searchYourImageSearchField.exists)
-
-        _ = searchYourImageSearchField.waitForExistence(timeout: 0.5)
+        searchYourImageSearchField.waitForExistence(timeout: 0.5)
     }
 
 
